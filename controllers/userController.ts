@@ -18,6 +18,7 @@ const loginUser = async (req: Request, res: Response) => {
   const user = await User.findOne({ email })
 
   if (user && (await comparePassword(password, user.password))) {
+    // jwt här
     res.json({
       _id: user._id,
       name: user.name,

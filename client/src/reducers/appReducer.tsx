@@ -1,6 +1,6 @@
 const initialState = {
   user: null,
-  gameState: 'login',
+  appState: 'login',
 }
 
 const appReducer = (state = initialState, action: any) => {
@@ -10,8 +10,14 @@ const appReducer = (state = initialState, action: any) => {
         ...state,
         user: action.payload,
       }
+    case 'LOGIN_USER':
+      return {
+        ...state,
+        user: action.payload,
+        appState: 'in-game',
+      }
     default:
-      break
+      return state
   }
 }
 

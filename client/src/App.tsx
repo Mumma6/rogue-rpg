@@ -1,9 +1,16 @@
 import React from 'react'
-import 'bootswatch/dist/slate/bootstrap.min.css' // Added this :boom:
 
-import './App.css'
-function App() {
-  return <div>heej</div>
+import Main from './Main'
+
+import { Provider } from 'react-redux'
+import store from './store'
+
+const App = () => {
+  return (
+    <Provider store={store}>
+      <Main />
+    </Provider>
+  )
 }
 
 export default App
