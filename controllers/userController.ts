@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import User from '../models/userModel'
 import { Request, Response } from 'express'
+import { IAccountCreation } from '../interfaces/users'
 
 const hashPassword = async (password: string) => {
   const salt = await bcrypt.genSalt(10)
@@ -13,8 +14,8 @@ const comparePassword = async (password: string, userPassword: string) =>
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 const loginUser = async (req: Request, res: Response) => {
-  const { email, password } = req.body
 
+  const { email, password } = req.body
   const user = await User.findOne({ email })
 
   if (user && (await comparePassword(password, user.password))) {
@@ -26,40 +27,48 @@ const loginUser = async (req: Request, res: Response) => {
     })
   } else {
     res.status(401)
-    throw new Error('Invalid email or password')
+    //throw new Error('Invalid email or password')
   }
 }
+
 
 // @desc    Register a new user
 // @route   POST /api/users/register
 const registerUser = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body
-
-  const userExists = await User.findOne({ email })
-
-  if (userExists) {
-    res.status(400)
-    throw new Error('User already exists')
-  }
-
-  const hashedPassword = await hashPassword(password)
-
-  const user = await User.create({
-    name,
-    email,
-    password: hashedPassword,
-  })
-
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
+  try{
+    const { name, email, password } = req.body
+    const userExists = await User.findOne({ email })
+  
+    if (userExists) {
+      res.status(400)
+      throw new Error('User already exists')
+    }
+  
+    const hashedPassword = await hashPassword(password)
+  
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
     })
-  } else {
-    res.status(400)
-    throw new Error('Invalid user data')
+  
+    if (user) {
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      })
+    } else {
+      res.status(400)
+      throw new Error('Invalid user data')
+    }
   }
+  catch (error) {
+    res.status(400).json({
+      Error: `Request error occured: ${error}`
+    })
+  }
+  
 }
 
 // @desc    Delete user

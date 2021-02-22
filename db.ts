@@ -4,7 +4,7 @@ const connectDB = async () => {
   try {
     await mongoose.connect(
       // put this in PROCESS.env sometime
-      'mongodb+srv://martin:rpg123@cluster0.k2vnj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+      'mongodb+srv://martin:rpg123@cluster0.k2vnj.mongodb.net/Game?retryWrites=true&w=majority',
       {
         useUnifiedTopology: true,
         useNewUrlParser: true,
