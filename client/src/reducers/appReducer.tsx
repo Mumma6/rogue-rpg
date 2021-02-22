@@ -1,5 +1,6 @@
 const initialState = {
   user: null,
+  gameState: 'login',
 }
 
 const appReducer = (state = initialState, action: any) => {
