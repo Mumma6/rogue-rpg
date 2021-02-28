@@ -4,6 +4,7 @@ const initialState = {
 }
 
 const appReducer = (state = initialState, action: any) => {
+  console.log(action.payload)
   switch (action.type) {
     case 'REGISTER_ACCOUNT':
       return {

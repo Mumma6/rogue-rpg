@@ -33,7 +33,7 @@ const Main = () => {
     }
   }
 
-  return <div>{render(appState)}</div>
+  return <div className="container">{render(appState)}</div>
 }
 
 export default Main
