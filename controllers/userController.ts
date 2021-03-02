@@ -14,7 +14,6 @@ const comparePassword = async (password: string, userPassword: string) =>
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 const loginUser = async (req: Request, res: Response) => {
-
   const { email, password } = req.body
   const user = await User.findOne({ email })
 
@@ -31,44 +30,40 @@ const loginUser = async (req: Request, res: Response) => {
   }
 }
 
-
 // @desc    Register a new user
 // @route   POST /api/users/register
 const registerUser = async (req: Request, res: Response) => {
-  try{
-    const { name, email, password } = req.body
+  try {
+    const { email, password } = req.body
     const userExists = await User.findOne({ email })
-  
+
     if (userExists) {
       res.status(400)
       throw new Error('User already exists')
     }
-  
+
     const hashedPassword = await hashPassword(password)
-  
+
     const user = await User.create({
-      name,
       email,
       password: hashedPassword,
     })
-  
+
     if (user) {
       res.status(201).json({
         _id: user._id,
-        name: user.name,
         email: user.email,
       })
     } else {
       res.status(400)
       throw new Error('Invalid user data')
     }
-  }
-  catch (error) {
+  } catch (error) {
+    console.log(error)
     res.status(400).json({
-      Error: `Request error occured: ${error}`
+      Error: `Request error occured: ${error}`,
     })
   }
-  
 }
 
 // @desc    Delete user

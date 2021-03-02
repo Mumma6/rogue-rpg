@@ -9,7 +9,7 @@ interface ILogin {
 
 const Login: React.FC = () => {
   const dispatch = useDispatch()
-  const initialState = {
+  const initialState: ILogin = {
     email: '',
     password: '',
   }
@@ -59,6 +59,15 @@ const Login: React.FC = () => {
         <input type="submit" className="btn btn-primary" value="Logga in" />
       </form>
       <p className="my-1">Har du redan inget konto? Registrera dig</p>
+      <button
+        onClick={() =>
+          dispatch({
+            type: 'CREATE_ACCOUNT',
+          })
+        }
+      >
+        Registrera dig
+      </button>
     </React.Fragment>
   )
 }

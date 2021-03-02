@@ -11,6 +11,11 @@ const appReducer = (state = initialState, action: any) => {
         ...state,
         user: action.payload,
       }
+    case 'CREATE_ACCOUNT':
+      return {
+        ...state,
+        appState: 'create-account',
+      }
     case 'LOGIN_USER':
       return {
         ...state,

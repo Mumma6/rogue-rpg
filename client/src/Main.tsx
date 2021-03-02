@@ -8,7 +8,7 @@ import Navbar from './components/layout/Navbar'
 const Main = () => {
   const appState = useSelector((state: AppState) => state.store.appState)
 
-  const addNavbar = (Component: any) => (
+  const addNavbar = (Component: React.FC) => (
     <>
       <Navbar />
       <Component />
@@ -20,7 +20,7 @@ const Main = () => {
 
   const inGame = <Game />
 
-  const render = (state: any) => {
+  const render = (state: string) => {
     switch (state) {
       case 'login':
         return login

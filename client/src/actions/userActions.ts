@@ -5,7 +5,7 @@ const API_ENDPOINT = 'http://localhost:5000/api'
 
 export const createAccount = (data: any) => async (dispatch: any) => {
   try {
-    const res = await axios.post(`${API_ENDPOINT}/users`, data)
+    const res = await axios.post(`${API_ENDPOINT}/users/register`, data)
 
     dispatch({
       type: 'REGISTER_ACCOUNT',
