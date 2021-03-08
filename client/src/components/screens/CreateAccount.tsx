@@ -1,38 +1,22 @@
-import React, { useState } from 'react'
+import React, { FormEvent, ChangeEvent } from 'react'
 import { createAccount } from '../../actions/userActions'
-import { useDispatch } from 'react-redux'
-
-interface ICreateAccount {
-  email: string
-  password: string
-  password2: string
-}
+import { useForm } from '../../customHooks/useForm'
 
 const CreateAccount: React.FC = () => {
-  const dispatch = useDispatch()
-  const initialState: ICreateAccount = {
+  const initialState = {
     email: '',
     password: '',
     password2: '',
   }
 
-  const [registerData, setRegisterData] = useState<ICreateAccount>(initialState)
+  const { formData, handleChange, handleSubmit } = useForm(
+    initialState,
+    createAccount
+  )
 
-  const { email, password, password2 } = registerData
+  const { email, password, password2 } = formData
 
-  const onChange = (e: any) =>
-    setRegisterData({
-      ...registerData,
-      [e.target.name]: e.target.value,
-    })
-
-  const onSubmit = (e: any) => {
-    e.preventDefault()
-    if (password === password2) {
-      console.log('reggar med', registerData)
-      dispatch(createAccount({ email, password }))
-    }
-  }
+  const isPasswordMatch = (p1: string, p2: string) => p1 === p2
 
   return (
     <React.Fragment>
@@ -40,14 +24,17 @@ const CreateAccount: React.FC = () => {
       <p className="lead">
         <i className="fas fa-user" /> Create account
       </p>
-      <form className="form" onSubmit={e => onSubmit(e)}>
+      <form
+        className="form"
+        onSubmit={(evt: FormEvent<HTMLFormElement>) => handleSubmit(evt)}
+      >
         <div className="form-group">
           <input
             type="email"
             placeholder="E-postadress"
             name="email"
             value={email}
-            onChange={e => onChange(e)}
+            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             required
           />
         </div>
@@ -58,7 +45,7 @@ const CreateAccount: React.FC = () => {
             name="password"
             minLength={6}
             value={password}
-            onChange={e => onChange(e)}
+            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
           />
         </div>
         <div className="form-group">
@@ -68,10 +55,15 @@ const CreateAccount: React.FC = () => {
             name="password2"
             minLength={6}
             value={password2}
-            onChange={e => onChange(e)}
+            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Logga in" />
+        <input
+          type="submit"
+          className="btn btn-primary"
+          value="Skapa konto"
+          disabled={!isPasswordMatch(password, password2)}
+        />
       </form>
     </React.Fragment>
   )

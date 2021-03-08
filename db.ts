@@ -12,7 +12,9 @@ const connectDB = async () => {
       }
     )
 
-    console.log('MongoDB connected')
+    console.log(
+      'MongoDB connected, (Node:19012 and Node:10464 are SAFE to ignore)'
+    )
   } catch (error) {
     console.log(error)
     console.error(`Error: ${error.message}`)

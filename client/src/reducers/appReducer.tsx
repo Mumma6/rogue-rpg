@@ -11,6 +11,7 @@ const appReducer = (state = initialState, action: any) => {
       return {
         ...state,
         user: action.payload,
+        appState: 'in-game',
       }
     case 'CREATE_ACCOUNT':
       return {

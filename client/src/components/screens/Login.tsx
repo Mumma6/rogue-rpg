@@ -1,33 +1,22 @@
-import React, { useState } from 'react'
+import React, { FormEvent, ChangeEvent } from 'react'
 import { loginUser } from '../../actions/userActions'
+import { useForm } from '../../customHooks/useForm'
 import { useDispatch } from 'react-redux'
-
-interface ILogin {
-  email: string
-  password: string
-}
 
 const Login: React.FC = () => {
   const dispatch = useDispatch()
-  const initialState: ILogin = {
+
+  const initialState = {
     email: '',
     password: '',
   }
 
-  const [loginData, setLoginData] = useState<ILogin>(initialState)
+  const { formData, handleChange, handleSubmit } = useForm(
+    initialState,
+    loginUser
+  )
 
-  const { email, password } = loginData
-
-  const onChange = (e: any) =>
-    setLoginData({
-      ...loginData,
-      [e.target.name]: e.target.value,
-    })
-
-  const onSubmit = (e: any) => {
-    e.preventDefault()
-    dispatch(loginUser(loginData))
-  }
+  const { email, password } = formData
 
   return (
     <React.Fragment>
@@ -35,14 +24,17 @@ const Login: React.FC = () => {
       <p className="lead">
         <i className="fas fa-user" /> Logga in på ditt konto
       </p>
-      <form className="form" onSubmit={e => onSubmit(e)}>
+      <form
+        className="form"
+        onSubmit={(evt: FormEvent<HTMLFormElement>) => handleSubmit(evt)}
+      >
         <div className="form-group">
           <input
             type="email"
             placeholder="E-postadress"
             name="email"
             value={email}
-            onChange={e => onChange(e)}
+            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             required
           />
         </div>
@@ -53,7 +45,7 @@ const Login: React.FC = () => {
             name="password"
             minLength={6}
             value={password}
-            onChange={e => onChange(e)}
+            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Logga in" />
