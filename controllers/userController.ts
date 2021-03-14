@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs'
 import User from '../models/userModel'
 import { Request, Response } from 'express'
-import { IAccountCreation } from '../interfaces/users'
 
 const hashPassword = async (password: string) => {
   const salt = await bcrypt.genSalt(10)
@@ -16,6 +15,7 @@ const comparePassword = async (password: string, userPassword: string) =>
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
+  console.log(user)
 
   if (user && (await comparePassword(password, user.password))) {
     // jwt här
@@ -23,6 +23,7 @@ const loginUser = async (req: Request, res: Response) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      role: user.role,
     })
   } else {
     res.status(401)

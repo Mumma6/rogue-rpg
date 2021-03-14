@@ -1,13 +1,13 @@
 import mongoose from 'mongoose'
 
-interface IHeroTemplate extends mongoose.Document {
+export interface IHeroTemplate extends mongoose.Document {
   name: string
-  class: string
-  portraitUrl: string
+  classType: string
   attackRating: number
   defenceRating: number
   healthPoints: number
   manaPoints: number
+  portraitUrl?: string
 }
 
 const heroTemplateSchema = new mongoose.Schema({
@@ -15,14 +15,13 @@ const heroTemplateSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  class: {
+  classType: {
     type: String,
     required: true,
   },
   portraitUrl: {
     // läggs i en asset map i frontend
     type: String,
-    required: true,
   },
   attackRating: {
     type: Number,

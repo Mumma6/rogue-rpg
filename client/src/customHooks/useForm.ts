@@ -15,6 +15,7 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
+    setFormData(state)
     dispatch(dispatchFunc(formData))
   }
 
