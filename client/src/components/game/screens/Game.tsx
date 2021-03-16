@@ -1,11 +1,11 @@
 import React from 'react'
-import { AppState } from '../../../store'
+import { State } from '../../../reducers/rootReducer'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 
 const Game = () => {
   const dispatch = useDispatch()
-  const user = useSelector((state: AppState) => state.store.user)
+  const user = useSelector((state: State) => state.app.user)
 
   const isAdmin = user.role === 'admin'
 
@@ -14,6 +14,8 @@ const Game = () => {
       <div>hej inGamestuff</div>
       {isAdmin && (
         <button
+          type="button"
+          className="btn btn-info"
           onClick={() =>
             dispatch({
               type: 'ADMIN_AREA',

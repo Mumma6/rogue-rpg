@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { AppState } from './store'
+import { State } from './reducers/rootReducer'
 import CreateAccount from './components/screens/CreateAccount'
 import AdminLanding from './components/game/admin/AdminLanding'
 import Game from './components/game/screens/Game'
@@ -7,7 +7,7 @@ import Login from './components/screens/Login'
 import Navbar from './components/layout/Navbar'
 
 const Main = () => {
-  const appState = useSelector((state: AppState) => state.store.appState)
+  const appState = useSelector((state: State) => state.app.appState)
 
   const addNavbar = (Component: React.FC) => (
     <>

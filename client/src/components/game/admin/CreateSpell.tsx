@@ -2,55 +2,44 @@ import React, { FormEvent, ChangeEvent, useEffect } from 'react'
 import { State } from '../../../reducers/rootReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  createHeroTemplate,
-  getAllHeroTemplates,
-  deleteHeroTemplate,
+  createSpell,
+  getAllSpells,
+  deleteSpell,
 } from '../../../actions/adminActions'
 import { useForm } from '../../../customHooks/useForm'
 
-const CreateHeroTemplate = ({ toggle }: any) => {
+const CreateSpell = ({ toggle }: any) => {
   const dispatch = useDispatch()
-  const currentHeroTemplates = useSelector(
-    (state: State) => state.admin.heroTemplates
-  )
+  const currentSpells = useSelector((state: State) => state.admin.spells)
 
   useEffect(() => {
-    dispatch(getAllHeroTemplates())
+    dispatch(getAllSpells())
   }, [dispatch])
 
   const initialState = {
     name: '',
-    attackRating: 0,
-    defenceRating: 0,
-    classType: '',
-    healthPoints: 0,
-    manaPoints: 0,
+    damage: 0,
+    healing: 0,
+    magicSchool: '',
   }
 
   type ObjectAlias = typeof initialState
 
-  interface Hero extends ObjectAlias {
+  interface Spell extends ObjectAlias {
     _id: string
   }
 
   const { formData, handleChange, handleSubmit } = useForm(
     initialState,
-    createHeroTemplate
+    createSpell
   )
 
-  const {
-    name,
-    attackRating,
-    defenceRating,
-    classType,
-    healthPoints,
-    manaPoints,
-  } = formData
+  const { name, damage, healing, magicSchool } = formData
 
   return (
     <div style={{ marginTop: 20 }}>
       <p className="lead">
-        <i className="fas fa-user" /> Create hero template
+        <i className="fas fa-magic" /> Create spell
       </p>
       <form
         className="form"
@@ -70,9 +59,9 @@ const CreateHeroTemplate = ({ toggle }: any) => {
         <div className="form-group">
           <input
             type="number"
-            placeholder="AttackRating"
-            name="attackRating"
-            value={attackRating}
+            placeholder="Damage"
+            name="damage"
+            value={damage}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             className="form-control"
           />
@@ -80,39 +69,19 @@ const CreateHeroTemplate = ({ toggle }: any) => {
         <div className="form-group">
           <input
             type="number"
-            placeholder="DefenceRating"
-            name="defenceRating"
-            value={defenceRating}
+            placeholder="Healing"
+            name="healing"
+            value={healing}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             className="form-control"
           />
         </div>
         <div className="form-group">
           <input
-            type="classType"
-            placeholder="Class type"
-            name="classType"
-            value={classType}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="number"
-            placeholder="healthPoints"
-            name="healthPoints"
-            value={healthPoints}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="number"
-            placeholder="manaPoints"
-            name="manaPoints"
-            value={manaPoints}
+            type="text"
+            placeholder="Magic school"
+            name="magicSchool"
+            value={magicSchool}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             className="form-control"
           />
@@ -120,7 +89,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
         <input
           type="submit"
           className="btn btn-success"
-          value="Create template"
+          value="Create spell"
           disabled={
             // find out a better way then this
             JSON.stringify({ a: formData }) ===
@@ -134,16 +103,12 @@ const CreateHeroTemplate = ({ toggle }: any) => {
           onClick={toggle}
         />
       </form>
-      <h1>Heros already created</h1>
-      {currentHeroTemplates.map((hero: Hero) => (
+      <h1>Spells already created</h1>
+      {currentSpells.map((spell: Spell) => (
         <div>
-          <div>{hero.name}</div>
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => dispatch(deleteHeroTemplate({ id: hero._id }))}
-          >
-            <i className="fas fa-trash-alt"></i>
+          <div>{spell.name}</div>
+          <button onClick={() => dispatch(deleteSpell({ id: spell._id }))}>
+            X
           </button>
         </div>
       ))}
@@ -151,4 +116,4 @@ const CreateHeroTemplate = ({ toggle }: any) => {
   )
 }
 
-export default CreateHeroTemplate
+export default CreateSpell

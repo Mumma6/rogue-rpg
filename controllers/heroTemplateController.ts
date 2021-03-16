@@ -13,9 +13,9 @@ const createHeroTemplate = async (req: Request, res: Response) => {
       healthPoints,
       manaPoints,
     } = <IHeroTemplate>req.body
-    const userExists = await HeroTemplate.findOne({ name })
+    const heroTemplateExists = await HeroTemplate.findOne({ name })
 
-    if (userExists) {
+    if (heroTemplateExists) {
       res.status(400)
       throw new Error('Template already exists')
     }
