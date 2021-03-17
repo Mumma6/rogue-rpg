@@ -9,7 +9,8 @@ const AdminLanding = () => {
   const dispatch = useDispatch()
 
   return (
-    <div className="container" style={{ marginTop: 50 }}>
+    <div className="container">
+      <h2 className="my-3">Admin interface</h2>
       <button
         type="button"
         className="btn btn-info"

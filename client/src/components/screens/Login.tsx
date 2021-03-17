@@ -19,10 +19,9 @@ const Login: React.FC = () => {
   const { email, password } = formData
 
   return (
-    <React.Fragment>
-      <h1 className="large text-primary">Logga in</h1>
+    <div className="container-fluid" style={{ marginTop: 40, width: 400 }}>
       <p className="lead">
-        <i className="fas fa-user" /> Logga in på ditt konto
+        <i className="fas fa-user" /> Log in to your account
       </p>
       <form
         className="form"
@@ -31,36 +30,40 @@ const Login: React.FC = () => {
         <div className="form-group">
           <input
             type="email"
-            placeholder="E-postadress"
+            placeholder="Email"
             name="email"
             value={email}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             required
+            className="form-control"
           />
         </div>
         <div className="form-group">
           <input
             type="password"
-            placeholder="Lösenord"
+            placeholder="Password"
             name="password"
             minLength={6}
             value={password}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+            className="form-control"
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Logga in" />
+        <input type="submit" className="btn btn-success" value="Log in" />
       </form>
-      <p className="my-1">Har du redan inget konto? Registrera dig</p>
+      <p style={{ marginTop: 40 }}>Dont have an account?</p>
       <button
+        type="submit"
+        className="btn btn-info"
         onClick={() =>
           dispatch({
             type: 'CREATE_ACCOUNT',
           })
         }
       >
-        Registrera dig
+        Create account
       </button>
-    </React.Fragment>
+    </div>
   )
 }
 

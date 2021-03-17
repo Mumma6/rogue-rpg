@@ -1,8 +1,10 @@
 import React, { FormEvent, ChangeEvent } from 'react'
 import { createAccount } from '../../actions/userActions'
 import { useForm } from '../../customHooks/useForm'
+import { useDispatch } from 'react-redux'
 
 const CreateAccount: React.FC = () => {
+  const dispatch = useDispatch()
   const initialState = {
     email: '',
     password: '',
@@ -19,8 +21,7 @@ const CreateAccount: React.FC = () => {
   const isPasswordMatch = (p1: string, p2: string) => p1 === p2
 
   return (
-    <React.Fragment>
-      <h1 className="large text-primary">Create account</h1>
+    <div className="container-fluid" style={{ marginTop: 40, width: 400 }}>
       <p className="lead">
         <i className="fas fa-user" /> Create account
       </p>
@@ -31,11 +32,12 @@ const CreateAccount: React.FC = () => {
         <div className="form-group">
           <input
             type="email"
-            placeholder="E-postadress"
+            placeholder="Email"
             name="email"
             value={email}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             required
+            className="form-control"
           />
         </div>
         <div className="form-group">
@@ -46,6 +48,7 @@ const CreateAccount: React.FC = () => {
             minLength={6}
             value={password}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+            className="form-control"
           />
         </div>
         <div className="form-group">
@@ -56,16 +59,29 @@ const CreateAccount: React.FC = () => {
             minLength={6}
             value={password2}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+            className="form-control"
           />
         </div>
         <input
           type="submit"
-          className="btn btn-primary"
-          value="Skapa konto"
+          className="btn btn-success"
+          value="Create account"
           disabled={!isPasswordMatch(password, password2)}
         />
       </form>
-    </React.Fragment>
+      <p style={{ marginTop: 40 }}>Allready have an account?</p>
+      <button
+        type="submit"
+        className="btn btn-info"
+        onClick={() =>
+          dispatch({
+            type: 'DISPLAY_LOGIN',
+          })
+        }
+      >
+        Log in
+      </button>
+    </div>
   )
 }
 

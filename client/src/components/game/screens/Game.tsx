@@ -11,7 +11,7 @@ const Game = () => {
 
   return (
     <>
-      <div>hej inGamestuff</div>
+      <h2 className="my-3">Game menu</h2>
       {isAdmin && (
         <button
           type="button"
@@ -22,9 +22,20 @@ const Game = () => {
             })
           }
         >
-          Gå till admin interface
+          Go to admin interface
         </button>
       )}
+      <button
+        type="button"
+        className="btn btn-info"
+        onClick={() =>
+          dispatch({
+            type: 'LOG_OUT',
+          })
+        }
+      >
+        Log out
+      </button>
     </>
   )
 }

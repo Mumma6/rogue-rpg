@@ -23,6 +23,11 @@ const appReducer = (state = initialState, action: any) => {
         user: action.payload,
         appState: 'in-game',
       }
+    case 'DISPLAY_LOGIN':
+      return {
+        ...state,
+        appState: 'login',
+      }
     case 'ADMIN_AREA':
       return {
         ...state,
@@ -33,6 +38,8 @@ const appReducer = (state = initialState, action: any) => {
         ...state,
         appState: 'in-game',
       }
+    case 'LOG_OUT':
+      return initialState
     default:
       return state
   }
