@@ -1,6 +1,7 @@
 import React, { FormEvent, ChangeEvent, useEffect } from 'react'
 import { State } from '../../../reducers/rootReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { Form, Button } from 'react-bootstrap'
 import {
   createHeroTemplate,
   getAllHeroTemplates,
@@ -20,11 +21,11 @@ const CreateHeroTemplate = ({ toggle }: any) => {
 
   const initialState = {
     name: '',
-    attackRating: 0,
-    defenceRating: 0,
+    attackRating: '',
+    defenceRating: '',
     classType: '',
-    healthPoints: 0,
-    manaPoints: 0,
+    healthPoints: '',
+    manaPoints: '',
   }
 
   type ObjectAlias = typeof initialState
@@ -33,10 +34,12 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     _id: string
   }
 
-  const { formData, handleChange, handleSubmit } = useForm(
+  const { formData, handleChange, handleSubmit, errors } = useForm(
     initialState,
     createHeroTemplate
   )
+
+  const checkIsInvalid = (id: string) => errors.includes(id)
 
   const {
     name,
@@ -48,84 +51,88 @@ const CreateHeroTemplate = ({ toggle }: any) => {
   } = formData
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div className="container-fluid" style={{ marginTop: 40, width: 500 }}>
       <p className="lead">
         <i className="fas fa-user" /> Create hero template
       </p>
-      <form
+      <Form
         className="form"
         onSubmit={(evt: FormEvent<HTMLFormElement>) => handleSubmit(evt)}
       >
-        <div className="form-group">
-          <input
+        <Form.Group>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
             type="name"
             placeholder="Name"
             name="name"
             value={name}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            required
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
+            isInvalid={checkIsInvalid('name')}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Attack Rating</Form.Label>
+          <Form.Control
             type="number"
-            placeholder="AttackRating"
+            placeholder="Attack Rating"
             name="attackRating"
             value={attackRating}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
+            isInvalid={checkIsInvalid('attackRating')}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Defence Rating</Form.Label>
+          <Form.Control
             type="number"
-            placeholder="DefenceRating"
+            placeholder="Defence Rating"
             name="defenceRating"
             value={defenceRating}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
+            isInvalid={checkIsInvalid('defenceRating')}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Class type</Form.Label>
+          <Form.Control
             type="classType"
             placeholder="Class type"
             name="classType"
             value={classType}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
+            isInvalid={checkIsInvalid('classType')}
+          ></Form.Control>
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Health Points</Form.Label>
+          <Form.Control
             type="number"
-            placeholder="healthPoints"
+            placeholder="Health Points"
             name="healthPoints"
             value={healthPoints}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
+            isInvalid={checkIsInvalid('healthPoints')}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Mana Points</Form.Label>
+          <Form.Control
             type="number"
-            placeholder="manaPoints"
+            placeholder="Mana Points"
             name="manaPoints"
             value={manaPoints}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
+            isInvalid={checkIsInvalid('manaPoints')}
+          ></Form.Control>
+          <Form.Control.Feedback type="invalid">
+            Please provide a valid input.
+          </Form.Control.Feedback>
+        </Form.Group>
         <input
           type="submit"
           className="btn btn-success"
           value="Create template"
-          disabled={
-            // find out a better way then this
-            JSON.stringify({ a: formData }) ===
-            JSON.stringify({ a: initialState })
-          }
         />
         <input
           type="submit"
@@ -133,18 +140,18 @@ const CreateHeroTemplate = ({ toggle }: any) => {
           value="Abort"
           onClick={toggle}
         />
-      </form>
+      </Form>
       <h1>Heros already created</h1>
       {currentHeroTemplates.map((hero: Hero) => (
         <div>
           <div>{hero.name}</div>
-          <button
+          <Button
             type="button"
             className="btn btn-danger"
             onClick={() => dispatch(deleteHeroTemplate({ id: hero._id }))}
           >
             <i className="fas fa-trash-alt"></i>
-          </button>
+          </Button>
         </div>
       ))}
     </div>

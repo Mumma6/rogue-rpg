@@ -18,8 +18,8 @@ const CreateSpell = ({ toggle }: any) => {
 
   const initialState = {
     name: '',
-    damage: 0,
-    healing: 0,
+    damage: '',
+    healing: '',
     magicSchool: '',
   }
 
@@ -37,7 +37,7 @@ const CreateSpell = ({ toggle }: any) => {
   const { name, damage, healing, magicSchool } = formData
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div className="container-fluid" style={{ marginTop: 40, width: 500 }}>
       <p className="lead">
         <i className="fas fa-magic" /> Create spell
       </p>

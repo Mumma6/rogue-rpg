@@ -11,12 +11,15 @@ const Login: React.FC = () => {
     password: '',
   }
 
-  const { formData, handleChange, handleSubmit } = useForm(
+  const { formData, handleChange, handleSubmit, errors } = useForm(
     initialState,
     loginUser
   )
 
   const { email, password } = formData
+
+  const validate = (input: string) =>
+    errors.includes(input) ? 'is-invalid' : ''
 
   return (
     <div className="container-fluid" style={{ marginTop: 40, width: 400 }}>
@@ -35,7 +38,7 @@ const Login: React.FC = () => {
             value={email}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             required
-            className="form-control"
+            className={`form-control`}
           />
         </div>
         <div className="form-group">
@@ -46,10 +49,15 @@ const Login: React.FC = () => {
             minLength={6}
             value={password}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
+            className={`form-control`}
           />
         </div>
-        <input type="submit" className="btn btn-success" value="Log in" />
+        <input
+          type="submit"
+          className="btn btn-success"
+          value="Log in"
+          // disabled={Object.values(formData).some(input => input === '')}
+        />
       </form>
       <p style={{ marginTop: 40 }}>Dont have an account?</p>
       <button
