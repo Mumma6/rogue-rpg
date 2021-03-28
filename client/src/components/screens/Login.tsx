@@ -2,6 +2,8 @@ import React, { FormEvent, ChangeEvent } from 'react'
 import { loginUser } from '../../actions/userActions'
 import { useForm } from '../../customHooks/useForm'
 import { useDispatch } from 'react-redux'
+import { Form } from 'react-bootstrap'
+import { checkIsInvalid } from '../../utils'
 
 const Login: React.FC = () => {
   const dispatch = useDispatch()
@@ -11,55 +13,55 @@ const Login: React.FC = () => {
     password: '',
   }
 
-  const { formData, handleChange, handleSubmit, errors } = useForm(
+  const { formData, handleChange, handleSubmit, errors, resetForm } = useForm(
     initialState,
     loginUser
   )
 
   const { email, password } = formData
 
-  const validate = (input: string) =>
-    errors.includes(input) ? 'is-invalid' : ''
-
   return (
     <div className="container-fluid" style={{ marginTop: 40, width: 400 }}>
       <p className="lead">
         <i className="fas fa-user" /> Log in to your account
       </p>
-      <form
+      <Form
         className="form"
         onSubmit={(evt: FormEvent<HTMLFormElement>) => handleSubmit(evt)}
       >
-        <div className="form-group">
-          <input
+        <Form.Group>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
             type="email"
             placeholder="Email"
             name="email"
             value={email}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            required
-            className={`form-control`}
+            isInvalid={checkIsInvalid(errors, 'email')}
           />
-        </div>
-        <div className="form-group">
-          <input
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             type="password"
             placeholder="Password"
             name="password"
             minLength={6}
             value={password}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className={`form-control`}
+            isInvalid={checkIsInvalid(errors, 'password')}
           />
-        </div>
+        </Form.Group>
+        <input type="submit" className="btn btn-success" value="Log in" />
         <input
-          type="submit"
-          className="btn btn-success"
-          value="Log in"
-          // disabled={Object.values(formData).some(input => input === '')}
+          type="button"
+          className="btn btn-info"
+          value="Reset"
+          onClick={() => resetForm()}
         />
-      </form>
+      </Form>
       <p style={{ marginTop: 40 }}>Dont have an account?</p>
+
       <button
         type="submit"
         className="btn btn-info"

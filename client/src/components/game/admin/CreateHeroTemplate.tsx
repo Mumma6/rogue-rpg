@@ -1,4 +1,4 @@
-import React, { FormEvent, ChangeEvent, useEffect } from 'react'
+import { FormEvent, ChangeEvent, useEffect } from 'react'
 import { State } from '../../../reducers/rootReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
@@ -8,6 +8,7 @@ import {
   deleteHeroTemplate,
 } from '../../../actions/adminActions'
 import { useForm } from '../../../customHooks/useForm'
+import { checkIsInvalid } from '../../../utils'
 
 const CreateHeroTemplate = ({ toggle }: any) => {
   const dispatch = useDispatch()
@@ -34,12 +35,10 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     _id: string
   }
 
-  const { formData, handleChange, handleSubmit, errors } = useForm(
+  const { formData, handleChange, handleSubmit, errors, resetForm } = useForm(
     initialState,
     createHeroTemplate
   )
-
-  const checkIsInvalid = (id: string) => errors.includes(id)
 
   const {
     name,
@@ -67,8 +66,8 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             name="name"
             value={name}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid('name')}
-          ></Form.Control>
+            isInvalid={checkIsInvalid(errors, 'name')}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Attack Rating</Form.Label>
@@ -78,8 +77,8 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             name="attackRating"
             value={attackRating}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid('attackRating')}
-          ></Form.Control>
+            isInvalid={checkIsInvalid(errors, 'attackRating')}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Defence Rating</Form.Label>
@@ -89,8 +88,8 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             name="defenceRating"
             value={defenceRating}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid('defenceRating')}
-          ></Form.Control>
+            isInvalid={checkIsInvalid(errors, 'defenceRating')}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Class type</Form.Label>
@@ -100,8 +99,8 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             name="classType"
             value={classType}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid('classType')}
-          ></Form.Control>
+            isInvalid={checkIsInvalid(errors, 'classType')}
+          />
         </Form.Group>
 
         <Form.Group>
@@ -112,8 +111,8 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             name="healthPoints"
             value={healthPoints}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid('healthPoints')}
-          ></Form.Control>
+            isInvalid={checkIsInvalid(errors, 'healthPoints')}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Mana Points</Form.Label>
@@ -123,8 +122,8 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             name="manaPoints"
             value={manaPoints}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid('manaPoints')}
-          ></Form.Control>
+            isInvalid={checkIsInvalid(errors, 'manaPoints')}
+          />
           <Form.Control.Feedback type="invalid">
             Please provide a valid input.
           </Form.Control.Feedback>
@@ -135,7 +134,13 @@ const CreateHeroTemplate = ({ toggle }: any) => {
           value="Create template"
         />
         <input
-          type="submit"
+          type="button"
+          className="btn btn-info"
+          value="Reset"
+          onClick={() => resetForm()}
+        />
+        <input
+          type="button"
           className="btn btn-warning"
           value="Abort"
           onClick={toggle}

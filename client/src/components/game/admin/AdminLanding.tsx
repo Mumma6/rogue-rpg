@@ -1,12 +1,29 @@
 import { useState } from 'react'
 import CreateHeroTemplate from './CreateHeroTemplate'
 import CreateSpell from './CreateSpell'
+import CreateZone from './CreateZone'
+import CreateItems from './CreateItems'
 import { useDispatch } from 'react-redux'
 
 const AdminLanding = () => {
-  const [createHeroTemplate, setCreateHeroTemplate] = useState<Boolean>(false)
-  const [createSpell, setCreateSpell] = useState<Boolean>(false)
+  const [component, setComponent] = useState<string>('')
   const dispatch = useDispatch()
+
+  const render = (component: string) => {
+    switch (component) {
+      case 'hero':
+        return <CreateHeroTemplate toggle={() => setComponent('')} />
+      case 'spell':
+        return <CreateSpell toggle={() => setComponent('')} />
+      case 'zone':
+        return <CreateZone toggle={() => setComponent('')} />
+      case 'items':
+        return <CreateItems />
+
+      default:
+        return null
+    }
+  }
 
   return (
     <div className="container">
@@ -14,7 +31,6 @@ const AdminLanding = () => {
       <button
         type="button"
         className="btn btn-info"
-        disabled={!!createSpell || !!createHeroTemplate}
         onClick={() =>
           dispatch({
             type: 'INGAME_PAGE',
@@ -27,8 +43,7 @@ const AdminLanding = () => {
         <button
           type="button"
           className="btn btn-primary"
-          disabled={!!createSpell}
-          onClick={() => setCreateHeroTemplate(!createHeroTemplate)}
+          onClick={() => setComponent('hero')}
         >
           Create hero templates
         </button>
@@ -36,26 +51,28 @@ const AdminLanding = () => {
         <button
           type="button"
           className="btn btn-primary"
-          disabled={!!createHeroTemplate}
-          onClick={() => setCreateSpell(!createSpell)}
+          onClick={() => setComponent('spell')}
         >
-          Create item templates
+          Create spell templates
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setComponent('zone')}
+        >
+          Create zone templates
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setComponent('items')}
+        >
+          Create items templates
         </button>
       </div>
-      {createHeroTemplate && (
-        <CreateHeroTemplate
-          toggle={() => setCreateHeroTemplate(!createHeroTemplate)}
-        />
-      )}
-      {createSpell && (
-        <CreateSpell toggle={() => setCreateSpell(!createSpell)} />
-      )}
+      {render(component)}
     </div>
   )
 }
 
 export default AdminLanding
-
-/*
-  bara kunna ha en knapp aktiverad
-*/

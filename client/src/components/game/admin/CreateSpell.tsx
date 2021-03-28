@@ -1,6 +1,8 @@
 import React, { FormEvent, ChangeEvent, useEffect } from 'react'
 import { State } from '../../../reducers/rootReducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { Form, Button } from 'react-bootstrap'
+import { checkIsInvalid } from '../../../utils'
 import {
   createSpell,
   getAllSpells,
@@ -29,7 +31,7 @@ const CreateSpell = ({ toggle }: any) => {
     _id: string
   }
 
-  const { formData, handleChange, handleSubmit } = useForm(
+  const { formData, handleChange, handleSubmit, errors, resetForm } = useForm(
     initialState,
     createSpell
   )
@@ -41,68 +43,68 @@ const CreateSpell = ({ toggle }: any) => {
       <p className="lead">
         <i className="fas fa-magic" /> Create spell
       </p>
-      <form
+      <Form
         className="form"
         onSubmit={(evt: FormEvent<HTMLFormElement>) => handleSubmit(evt)}
       >
-        <div className="form-group">
-          <input
+        <Form.Group>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
             type="name"
             placeholder="Name"
             name="name"
             value={name}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            required
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
+            isInvalid={checkIsInvalid(errors, 'name')}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Damage</Form.Label>
+          <Form.Control
             type="number"
             placeholder="Damage"
             name="damage"
             value={damage}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
+            isInvalid={checkIsInvalid(errors, 'damage')}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Healing</Form.Label>
+          <Form.Control
             type="number"
             placeholder="Healing"
             name="healing"
             value={healing}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
+            isInvalid={checkIsInvalid(errors, 'healing')}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Magic school</Form.Label>
+          <Form.Control
+            type="name"
             placeholder="Magic school"
             name="magicSchool"
             value={magicSchool}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            className="form-control"
-          />
-        </div>
+            isInvalid={checkIsInvalid(errors, 'magicSchool')}
+          ></Form.Control>
+        </Form.Group>
+        <input type="submit" className="btn btn-success" value="Create spell" />
         <input
-          type="submit"
-          className="btn btn-success"
-          value="Create spell"
-          disabled={
-            // find out a better way then this
-            JSON.stringify({ a: formData }) ===
-            JSON.stringify({ a: initialState })
-          }
+          type="button"
+          className="btn btn-info"
+          value="Reset"
+          onClick={() => resetForm()}
         />
         <input
-          type="submit"
+          type="button"
           className="btn btn-warning"
           value="Abort"
           onClick={toggle}
         />
-      </form>
+      </Form>
       <h1>Spells already created</h1>
       {currentSpells.map((spell: Spell) => (
         <div>

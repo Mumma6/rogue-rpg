@@ -12,7 +12,12 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
       ...formData,
       [name]: value,
     })
-    setErros(errors.filter((err: string) => err !== name))
+    setErros(errors.filter((error: string) => error !== name))
+  }
+
+  const resetForm = () => {
+    setFormData(state)
+    setErros([])
   }
 
   const getEmptyStrings = (obj: Object) =>
@@ -25,14 +30,16 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
     (input: string) => input === ''
   )
 
+  const handleDispatch = () => {
+    resetForm()
+    dispatch(dispatchFunc(formData))
+  }
+
   const submit = () =>
-    hasErrors
-      ? setErros(getEmptyStrings(formData))
-      : dispatch(dispatchFunc(formData))
+    hasErrors ? setErros(getEmptyStrings(formData)) : handleDispatch()
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault()
-    setFormData(state)
     submit()
   }
 
@@ -41,5 +48,6 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
     handleChange,
     handleSubmit,
     errors,
+    resetForm,
   }
 }
