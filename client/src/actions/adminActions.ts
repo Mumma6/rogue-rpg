@@ -1,15 +1,49 @@
 import axios from 'axios'
 
 // Add to PROCESS.env ...
-const HERO_TEMPLATE_API_ENDPOINT = 'http://localhost:5000/api/hero/template'
-const SPELL_API_ENDPOINT = 'http://localhost:5000/api/spell'
+const HERO_TEMPLATE_API_ENDPOINT = 'http://localhost:5000/API/hero/template'
+const SPELL_API_ENDPOINT = 'http://localhost:5000/API/spell'
 
-export const createHeroTemplate = (data: any) => async (dispatch: any) => {
+interface DispatchConfig {
+  API: string
+  type: string // gör ett eget interface för alla types i reducers
+}
+
+// gör en actions config fil med alla dessa
+const createHeroConfig: DispatchConfig = {
+  API: `${HERO_TEMPLATE_API_ENDPOINT}/create`,
+  type: 'CREATE_HEROTEMPLATE',
+}
+
+const getAllHerosConfig: DispatchConfig = {
+  API: `${HERO_TEMPLATE_API_ENDPOINT}/`,
+  type: 'GET_ALL_HEROTEMPLATE',
+}
+
+const deleteHeroConfig: DispatchConfig = {
+  API: `${HERO_TEMPLATE_API_ENDPOINT}/delete`,
+  type: 'DELETE_HEROTEMPLATE',
+}
+
+const getAllSpellsConfig: DispatchConfig = {
+  API: `${SPELL_API_ENDPOINT}/create`,
+  type: 'CREATE_SPELL',
+}
+
+const deleteSpellConfig: DispatchConfig = {
+  API: `${SPELL_API_ENDPOINT}/delete`,
+  type: 'DELETE_SPELL',
+}
+
+const dispatchCurried = (
+  options: DispatchConfig,
+  data?: object | undefined
+) => async (dispatch: Function) => {
+  const { API, type } = options
   try {
-    const res = await axios.post(`${HERO_TEMPLATE_API_ENDPOINT}/create`, data)
-
+    const res = await axios.post(API, data)
     dispatch({
-      type: 'CREATE_HEROTEMPLATE',
+      type,
       payload: res.data,
     })
   } catch (error) {
@@ -17,65 +51,18 @@ export const createHeroTemplate = (data: any) => async (dispatch: any) => {
   }
 }
 
-export const getAllHeroTemplates = () => async (dispatch: any) => {
-  try {
-    const res = await axios.post(`${HERO_TEMPLATE_API_ENDPOINT}/`)
-    dispatch({
-      type: 'GET_ALL_HEROTEMPLATE',
-      payload: res.data,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+export const createHeroTemplate = (data: object) =>
+  dispatchCurried(createHeroConfig, data)
 
-export const deleteHeroTemplate = (data: any) => async (dispatch: any) => {
-  try {
-    const res = await axios.post(`${HERO_TEMPLATE_API_ENDPOINT}/delete`, data)
-    console.log(res.data)
-    dispatch({
-      type: 'DELETE_HEROTEMPLATE',
-      payload: res.data,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+export const getAllHeroTemplates = () => dispatchCurried(getAllHerosConfig)
 
-export const createSpell = (data: any) => async (dispatch: any) => {
-  try {
-    const res = await axios.post(`${SPELL_API_ENDPOINT}/create`, data)
+export const deleteHeroTemplate = (data: object) =>
+  dispatchCurried(deleteHeroConfig, data)
 
-    dispatch({
-      type: 'CREATE_SPELL',
-      payload: res.data,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+export const createSpell = (data: object) =>
+  dispatchCurried(getAllSpellsConfig, data)
 
-export const getAllSpells = () => async (dispatch: any) => {
-  try {
-    const res = await axios.post(`${SPELL_API_ENDPOINT}/`)
-    dispatch({
-      type: 'GET_ALL_SPELLS',
-      payload: res.data,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+export const getAllSpells = () => dispatchCurried(getAllSpellsConfig)
 
-export const deleteSpell = (data: any) => async (dispatch: any) => {
-  try {
-    const res = await axios.post(`${SPELL_API_ENDPOINT}/delete`, data)
-    console.log(res.data)
-    dispatch({
-      type: 'DELETE_SPELL',
-      payload: res.data,
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+export const deleteSpell = (data: object) =>
+  dispatchCurried(deleteSpellConfig, data)
