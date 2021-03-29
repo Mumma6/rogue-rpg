@@ -1,6 +1,7 @@
 const initialState = {
   heroTemplates: [],
   spells: [],
+  itemTypes: [],
 }
 
 const filterIdFromArray = (arr: any[], id: string) =>
@@ -40,6 +41,21 @@ const adminReducer = (state = initialState, action: any) => {
       return {
         ...state,
         spells: filterIdFromArray(state.spells, action.payload.id),
+      }
+    case 'CREATE_ITEM_TYPE':
+      return {
+        ...state,
+        itemTypes: [...state.itemTypes, action.payload],
+      }
+    case 'GET_ALL_ITEM_TYPES':
+      return {
+        ...state,
+        itemTypes: action.payload,
+      }
+    case 'DELETE_ITEM_TYPE':
+      return {
+        ...state,
+        itemTypes: filterIdFromArray(state.itemTypes, action.payload.id),
       }
     default:
       return state

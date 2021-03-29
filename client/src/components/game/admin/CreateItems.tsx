@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ItemType from './items/ItemType'
 
 const CreateItems = () => {
   const [component, setComponent] = useState<string>('')
@@ -6,7 +7,7 @@ const CreateItems = () => {
   const render = (component: string) => {
     switch (component) {
       case 'type':
-        return <h1>type</h1>
+        return <ItemType toggle={() => setComponent('')} />
       case 'prefix':
         return <h1>prefix</h1>
       case 'suffix':

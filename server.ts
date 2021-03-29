@@ -4,6 +4,7 @@ import cors from 'cors'
 import users from './routes/userRoutes'
 import heroTemplates from './routes/heroTemplateRoutes'
 import spells from './routes/spellRoutes'
+import itemTypes from './routes/itemRoutes/itemTypeRoutes'
 
 connectDB()
 
@@ -14,6 +15,7 @@ app.use(express.json())
 
 app.use('/api/users', users)
 app.use('/api/spell', spells)
+app.use('/api/items/type', itemTypes)
 app.use('/api/hero/template', heroTemplates)
 
 const PORT = 5000

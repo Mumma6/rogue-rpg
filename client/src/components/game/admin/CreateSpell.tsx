@@ -1,7 +1,7 @@
-import React, { FormEvent, ChangeEvent, useEffect } from 'react'
+import { FormEvent, ChangeEvent, useEffect } from 'react'
 import { State } from '../../../reducers/rootReducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import { checkIsInvalid } from '../../../utils'
 import {
   createSpell,

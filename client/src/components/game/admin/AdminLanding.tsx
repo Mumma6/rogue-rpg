@@ -30,7 +30,6 @@ const AdminLanding = () => {
       <h2 className="my-3">Admin interface</h2>
       <button
         type="button"
-        style={{ marginBottom: 10 }}
         className="btn btn-info"
         onClick={() =>
           dispatch({
