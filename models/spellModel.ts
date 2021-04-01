@@ -3,9 +3,19 @@ import mongoose from 'mongoose'
 export interface ISpellModel extends mongoose.Document {
   name: string
   magicSchool: string
-  damage: number
-  healing: number
-  icon?: string
+  manaCost: number
+  cooldown: number
+  tooltip: string
+  iconName?: string
+  targetType: string
+  damageTarget: number
+  damageSelf: number
+  healingTarget: number
+  healingSelf: number
+  applyBuffTarget: number
+  applyBuffSelf: number
+  applyBuffDuration: number
+
 }
 
 const spellModel = new mongoose.Schema({
@@ -17,18 +27,55 @@ const spellModel = new mongoose.Schema({
     type: String,
     required: true,
   },
-  icon: {
+  manaCost: {
+    type: Number,
+    required: true,
+  },
+  cooldown: {
+    type: Number,
+    required: true,
+  },
+  tooltip: {
+    type: String,
+    required: true,
+  },
+  iconName: {
     // läggs i en asset map i frontend
     type: String,
   },
-  damage: {
+  targetType: {
+    type: String,
+    required: true,
+  },
+  damageTarget: {
     type: Number,
     required: true,
   },
-  healing: {
+  damageSelf: {
     type: Number,
     required: true,
   },
+  healingTarget: {
+    type: Number,
+    required: true,
+  },
+  healingSelf: {
+    type: Number,
+    required: true,
+  },
+  applyBuffTarget: {
+    type: Number,
+    required: true,
+  },
+  applyBuffSelf: {
+    type: Number,
+    required: true,
+  },
+  applyBuffDuration: {
+    type: Number,
+    required: true,
+  },
+
 })
 
 const SpellModel = mongoose.model<ISpellModel>('SpellModel', spellModel)
