@@ -7,7 +7,7 @@ const Game = () => {
   const dispatch = useDispatch()
   const user = useSelector((state: State) => state.app.user)
 
-  const isAdmin = user.role === 'admin'
+  const isAdmin = user?.role === 'admin'
 
   return (
     <>

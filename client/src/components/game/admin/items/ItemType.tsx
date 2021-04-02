@@ -14,8 +14,6 @@ const ItemType = ({ toggle }: any) => {
   const dispatch = useDispatch()
   const currentItemTypes = useSelector((state: State) => state.admin.itemTypes)
 
-  console.log(currentItemTypes)
-
   useEffect(() => {
     dispatch(getAllItemTypes())
   }, [dispatch])
