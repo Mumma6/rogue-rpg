@@ -6,7 +6,7 @@ export interface ISpellModel extends mongoose.Document {
   manaCost: number
   cooldown: number
   tooltip: string
-  iconName?: string
+  iconName: string
   targetType: string
   damageTarget: number
   damageSelf: number
@@ -42,6 +42,7 @@ const spellModel = new mongoose.Schema({
   iconName: {
     // läggs i en asset map i frontend
     type: String,
+    required: true,
   },
   targetType: {
     type: String,

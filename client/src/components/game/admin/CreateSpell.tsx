@@ -46,7 +46,20 @@ const CreateSpell = ({ toggle }: any) => {
     createSpell
   )
 
-  const { name, magicSchool, tooltip, iconName, targetType, manaCost, cooldown, damageTarget, damageSelf, healingTarget, healingSelf, applyBuffTarget, applyBuffSelf, applyBuffDuration } = formData
+  const { name,
+    magicSchool,
+    tooltip,
+    iconName,
+    targetType,
+    manaCost,
+    cooldown,
+    damageTarget,
+    damageSelf,
+    healingTarget,
+    healingSelf,
+    applyBuffTarget,
+    applyBuffSelf,
+    applyBuffDuration } = formData
 
   return (
     <div className="container-fluid" style={{ marginTop: 40, width: 500 }}>
@@ -75,7 +88,6 @@ const CreateSpell = ({ toggle }: any) => {
             name="magicSchool"
             value={magicSchool}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-          //isInvalid={checkIsInvalid(errors, 'magicSchool')}
           >
             <option>Fire</option>
             <option>Cold</option>
@@ -136,7 +148,6 @@ const CreateSpell = ({ toggle }: any) => {
             name="targetType"
             value={targetType}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-          //isInvalid={checkIsInvalid(errors, 'targetType')}
           >
             <option>SpecificEnemy</option>
             <option>SpecificParty</option>

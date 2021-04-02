@@ -5,7 +5,20 @@ import { Request, Response } from 'express'
 // @route   POST /api/spell/create
 const createSpell = async (req: Request, res: Response) => {
   try {
-    const { name, magicSchool, manaCost, cooldown, tooltip, iconName, targetType, damageTarget, damageSelf, healingTarget, healingSelf, applyBuffTarget, applyBuffSelf, applyBuffDuration } = <ISpellModel>req.body
+    const { name,
+      magicSchool,
+      manaCost,
+      cooldown,
+      tooltip,
+      iconName,
+      targetType,
+      damageTarget,
+      damageSelf,
+      healingTarget,
+      healingSelf,
+      applyBuffTarget,
+      applyBuffSelf,
+      applyBuffDuration } = <ISpellModel>req.body
     const spellExists = await SpellModel.findOne({ name })
 
     if (spellExists) {
