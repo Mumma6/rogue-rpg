@@ -1,29 +1,23 @@
-import { useState } from 'react'
 import CreateHeroTemplate from './CreateHeroTemplate'
 import CreateSpell from './CreateSpell'
 import CreateZone from './CreateZone'
 import CreateItems from './CreateItems'
 import { useDispatch } from 'react-redux'
+import { useRender } from '../../../customHooks/useRender'
 
 const AdminLanding = () => {
-  const [component, setComponent] = useState<string>('')
   const dispatch = useDispatch()
 
-  const render = (component: string) => {
-    switch (component) {
-      case 'hero':
-        return <CreateHeroTemplate toggle={() => setComponent('')} />
-      case 'spell':
-        return <CreateSpell toggle={() => setComponent('')} />
-      case 'zone':
-        return <CreateZone toggle={() => setComponent('')} />
-      case 'items':
-        return <CreateItems />
-
-      default:
-        return null
-    }
+  const components = {
+    hero: () => <CreateHeroTemplate toggle={() => setCurrentComponent('')} />,
+    spell: () => <CreateSpell toggle={() => setCurrentComponent('')} />,
+    zone: () => <CreateZone toggle={() => setCurrentComponent('')} />,
+    items: () => <CreateItems />,
   }
+
+  const { render, currentComponent, setCurrentComponent } = useRender(
+    components
+  )
 
   return (
     <div className="container">
@@ -43,7 +37,7 @@ const AdminLanding = () => {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => setComponent('hero')}
+          onClick={() => setCurrentComponent('hero')}
         >
           Create hero templates
         </button>
@@ -51,26 +45,26 @@ const AdminLanding = () => {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => setComponent('spell')}
+          onClick={() => setCurrentComponent('spell')}
         >
           Create spell templates
         </button>
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => setComponent('zone')}
+          onClick={() => setCurrentComponent('zone')}
         >
           Create zone templates
         </button>
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => setComponent('items')}
+          onClick={() => setCurrentComponent('items')}
         >
           Create items templates
         </button>
       </div>
-      {render(component)}
+      {render(currentComponent)}
     </div>
   )
 }
