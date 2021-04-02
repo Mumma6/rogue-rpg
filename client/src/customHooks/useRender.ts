@@ -12,7 +12,7 @@ export function useRender(componentTypes: IComponentTypes) {
 
   const [currentComponent, setCurrentComponent] = useState<string>('default')
 
-  const render = (type: string) => ref[type]()
+  const render = (type: string) => (ref[type] ? ref[type]() : null)
 
   return {
     render,
