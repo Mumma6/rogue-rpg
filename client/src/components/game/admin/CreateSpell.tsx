@@ -24,7 +24,7 @@ const CreateSpell = ({ toggle }: any) => {
     manaCost: '',
     cooldown: '',
     tooltip: '',
-    iconName: '',
+    iconName: 'book-magic.png',
     targetType: 'SpecificEnemy',
     damageTarget: '',
     damageSelf: '',
@@ -131,10 +131,10 @@ const CreateSpell = ({ toggle }: any) => {
           ></Form.Control>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Icon</Form.Label>
+          <Form.Label><div style={{height: "45px"}}><img src={`/assets/icons/${iconName}`} height='45px' />Icon</div></Form.Label>
           <Form.Control
             type="text"
-            placeholder="FileName of Icon. (i.e. 'FireBlast1.png')"
+            placeholder="book-magic.png"
             name="iconName"
             value={iconName}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}

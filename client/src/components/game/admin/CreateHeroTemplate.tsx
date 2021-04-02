@@ -25,6 +25,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     attackRating: '',
     defenceRating: '',
     classType: '',
+    iconName: 'hero_artificer.png',
     healthPoints: '',
     manaPoints: '',
   }
@@ -45,6 +46,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     attackRating,
     defenceRating,
     classType,
+    iconName,
     healthPoints,
     manaPoints,
   } = formData
@@ -102,7 +104,17 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             isInvalid={checkIsInvalid(errors, 'classType')}
           />
         </Form.Group>
-
+        <Form.Group>
+          <Form.Label><div style={{height: "45px"}}><img src={`/assets/icons/characters/${iconName}`} height='45px' />Icon</div></Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="hero_artificer.png"
+            name="iconName"
+            value={iconName}
+            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+            isInvalid={checkIsInvalid(errors, 'iconName')}
+          ></Form.Control>
+        </Form.Group>
         <Form.Group>
           <Form.Label>Health Points</Form.Label>
           <Form.Control
@@ -149,7 +161,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
       <h1>Heros already created</h1>
       {currentHeroTemplates.map((hero: Hero) => (
         <div>
-          <div>{hero.name}</div>
+          <div><img src={`/assets/icons/characters/${hero.iconName}`} height='45px' /> {hero.name}</div>
           <Button
             type="button"
             className="btn btn-danger"

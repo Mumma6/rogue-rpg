@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 export interface IHeroTemplate extends mongoose.Document {
   name: string
   classType: string
+  iconName: string
   attackRating: number
   defenceRating: number
   healthPoints: number
@@ -19,9 +20,9 @@ const heroTemplateSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  portraitUrl: {
-    // läggs i en asset map i frontend
+  iconName: {
     type: String,
+    required: true,
   },
   attackRating: {
     type: Number,
