@@ -1,7 +1,7 @@
-import React from 'react'
 import { State } from '../../../reducers/rootReducer'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
+import types from '../../../reducers/types'
 
 const Game = () => {
   const dispatch = useDispatch()
@@ -18,7 +18,7 @@ const Game = () => {
           className="btn btn-info"
           onClick={() =>
             dispatch({
-              type: 'ADMIN_AREA',
+              type: types.ADMIN_AREA,
             })
           }
         >
@@ -30,7 +30,7 @@ const Game = () => {
         className="btn btn-info"
         onClick={() =>
           dispatch({
-            type: 'LOG_OUT',
+            type: types.LOG_OUT,
           })
         }
       >

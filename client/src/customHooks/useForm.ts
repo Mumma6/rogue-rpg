@@ -1,10 +1,11 @@
-import { useState, FormEvent, ChangeEvent } from 'react'
+import { useState, FormEvent, ChangeEvent, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
 export function useForm<Input>(state: Input, dispatchFunc: Function) {
   const [formData, setFormData] = useState<Input>(state)
   const [errors, setErros] = useState<string[]>([])
   const dispatch = useDispatch()
+
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.currentTarget
     setFormData({
@@ -14,12 +15,12 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
     setErros(errors.filter((error: string) => error !== name))
   }
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setFormData(state)
     setErros([])
-  }
+  }, [state])
 
-  const getEmptyStrings = (obj: Object) =>
+  const getEmptyStrings = (obj: Object): string[] =>
     Object.entries(obj)
       .filter(([_, value]: [string, string]) => value === '')
       .flatMap(x => x)
@@ -29,18 +30,23 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
     (input: string) => input === ''
   )
 
-  const handleDispatch = () => {
+  const handleDispatch = useCallback(() => {
     resetForm()
     dispatch(dispatchFunc(formData))
-  }
+  }, [dispatch, dispatchFunc, formData, resetForm])
 
-  const submit = () =>
-    hasErrors ? setErros(getEmptyStrings(formData)) : handleDispatch()
+  const submit = useCallback(
+    () => (hasErrors ? setErros(getEmptyStrings(formData)) : handleDispatch()),
+    [formData, handleDispatch, hasErrors]
+  )
 
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault()
-    submit()
-  }
+  const handleSubmit = useCallback(
+    (evt: FormEvent<HTMLFormElement>) => {
+      evt.preventDefault()
+      submit()
+    },
+    [submit]
+  )
 
   return {
     formData,

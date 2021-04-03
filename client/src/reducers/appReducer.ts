@@ -1,44 +1,55 @@
+import types from './types'
 const initialState = {
   user: null,
   appState: 'login',
   auth: false,
 }
 
-const appReducer = (state = initialState, action: any) => {
+interface IUser {
+  name: string
+  email: string
+  role: string
+}
+
+interface IActions {
+  type: string
+  payload: any
+}
+const appReducer = (state = initialState, action: IActions) => {
   switch (action.type) {
-    case 'REGISTER_ACCOUNT':
+    case types.REGISTER_ACCOUNT:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload as IUser,
         appState: 'in-game',
       }
-    case 'CREATE_ACCOUNT':
+    case types.CREATE_ACCOUNT:
       return {
         ...state,
         appState: 'create-account',
       }
-    case 'LOGIN_USER':
+    case types.LOGIN_USER:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload as IUser,
         appState: 'in-game',
       }
-    case 'DISPLAY_LOGIN':
+    case types.DISPLAY_LOGIN:
       return {
         ...state,
         appState: 'login',
       }
-    case 'ADMIN_AREA':
+    case types.ADMIN_AREA:
       return {
         ...state,
         appState: 'admin-area',
       }
-    case 'INGAME_PAGE':
+    case types.INGAME_PAGE:
       return {
         ...state,
         appState: 'in-game',
       }
-    case 'LOG_OUT':
+    case types.LOG_OUT:
       return initialState
     default:
       return state
