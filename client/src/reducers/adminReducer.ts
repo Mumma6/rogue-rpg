@@ -1,3 +1,4 @@
+import types from './types'
 const initialState = {
   heroTemplates: [],
   spells: [],
@@ -9,17 +10,17 @@ const filterIdFromArray = (arr: any[], id: string) =>
 
 const adminReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case 'CREATE_HEROTEMPLATE':
+    case types.CREATE_HEROTEMPLATE:
       return {
         ...state,
         heroTemplates: [...state.heroTemplates, action.payload],
       }
-    case 'GET_ALL_HEROTEMPLATE':
+    case types.GET_ALL_HEROTEMPLATE:
       return {
         ...state,
         heroTemplates: action.payload,
       }
-    case 'DELETE_HEROTEMPLATE':
+    case types.DELETE_HEROTEMPLATE:
       return {
         ...state,
         heroTemplates: filterIdFromArray(
@@ -27,32 +28,32 @@ const adminReducer = (state = initialState, action: any) => {
           action.payload.id
         ),
       }
-    case 'CREATE_SPELL':
+    case types.CREATE_SPELL:
       return {
         ...state,
         spells: [...state.spells, action.payload],
       }
-    case 'GET_ALL_SPELLS':
+    case types.GET_ALL_SPELLS:
       return {
         ...state,
         spells: action.payload,
       }
-    case 'DELETE_SPELL':
+    case types.DELETE_SPELL:
       return {
         ...state,
         spells: filterIdFromArray(state.spells, action.payload.id),
       }
-    case 'CREATE_ITEM_TYPE':
+    case types.CREATE_ITEM_TYPE:
       return {
         ...state,
         itemTypes: [...state.itemTypes, action.payload],
       }
-    case 'GET_ALL_ITEM_TYPES':
+    case types.GET_ALL_ITEM_TYPES:
       return {
         ...state,
         itemTypes: action.payload,
       }
-    case 'DELETE_ITEM_TYPE':
+    case types.DELETE_ITEM_TYPE:
       return {
         ...state,
         itemTypes: filterIdFromArray(state.itemTypes, action.payload.id),

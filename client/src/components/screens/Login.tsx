@@ -4,6 +4,7 @@ import { useForm } from '../../customHooks/useForm'
 import { useDispatch } from 'react-redux'
 import { Form } from 'react-bootstrap'
 import { checkIsInvalid } from '../../utils'
+import types from '../../reducers/types'
 
 const Login: React.FC = () => {
   const dispatch = useDispatch()
@@ -67,7 +68,7 @@ const Login: React.FC = () => {
         className="btn btn-info"
         onClick={() =>
           dispatch({
-            type: 'CREATE_ACCOUNT',
+            type: types.CREATE_ACCOUNT,
           })
         }
       >

@@ -4,6 +4,7 @@ import CreateZone from './CreateZone'
 import CreateItems from './CreateItems'
 import { useDispatch } from 'react-redux'
 import { useRender } from '../../../customHooks/useRender'
+import types from '../../../reducers/types'
 
 const AdminLanding = () => {
   const dispatch = useDispatch()
@@ -27,7 +28,7 @@ const AdminLanding = () => {
         className="btn btn-info"
         onClick={() =>
           dispatch({
-            type: 'INGAME_PAGE',
+            type: types.INGAME_PAGE,
           })
         }
       >
