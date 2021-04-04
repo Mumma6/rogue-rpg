@@ -6,6 +6,7 @@ import {
   deleteHeroConfig,
   deleteItemTypeConfig,
   deleteSpellConfig,
+  updateSpellConfig,
   getAllHerosConfig,
   getAllItemTypesConfig,
   getAllSpellsConfig,
@@ -23,6 +24,9 @@ export const createSpell = (data: object) =>
   dispatchCurried(createSpellsConfig, data)
 
 export const getAllSpells = () => dispatchCurried(getAllSpellsConfig)
+
+export const updateSpell = (data: object) =>
+  dispatchCurried(updateSpellConfig, data)
 
 export const deleteSpell = (data: object) =>
   dispatchCurried(deleteSpellConfig, data)

@@ -15,7 +15,6 @@ const comparePassword = async (password: string, userPassword: string) =>
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
-  console.log(user)
 
   if (user && (await comparePassword(password, user.password))) {
     // jwt här

@@ -31,6 +31,11 @@ export const createSpellsConfig: DispatchConfig = {
   type: types.CREATE_SPELL,
 }
 
+export const updateSpellConfig: DispatchConfig = {
+  API: `${SPELL_API_ENDPOINT}/update`,
+  type: types.UPDATE_SPELL,
+}
+
 export const deleteSpellConfig: DispatchConfig = {
   API: `${SPELL_API_ENDPOINT}/delete`,
   type: types.DELETE_SPELL,

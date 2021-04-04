@@ -5,7 +5,8 @@ import { Request, Response } from 'express'
 // @route   POST /api/spell/create
 const createSpell = async (req: Request, res: Response) => {
   try {
-    const { name,
+    const {
+      name,
       magicSchool,
       manaCost,
       cooldown,
@@ -18,7 +19,8 @@ const createSpell = async (req: Request, res: Response) => {
       healingSelf,
       applyBuffTarget,
       applyBuffSelf,
-      applyBuffDuration } = <ISpellModel>req.body
+      applyBuffDuration,
+    } = <ISpellModel>req.body
     const spellExists = await SpellModel.findOne({ name })
 
     if (spellExists) {
@@ -99,4 +101,56 @@ const getAllSpells = async (req: Request, res: Response) => {
   }
 }
 
-export { createSpell, deleteSpell, getAllSpells }
+// @desc    update spell
+// @route   POST /api/spell/update
+const updateSpell = async (req: Request, res: Response) => {
+  const {
+    _id,
+    name,
+    magicSchool,
+    manaCost,
+    cooldown,
+    tooltip,
+    iconName,
+    targetType,
+    damageTarget,
+    damageSelf,
+    healingTarget,
+    healingSelf,
+    applyBuffTarget,
+    applyBuffSelf,
+    applyBuffDuration,
+  } = <ISpellModel>req.body
+
+  const spell = await SpellModel.findById(req.body._id)
+
+  console.log(spell, 'spell från body')
+
+  if (spell) {
+    spell._id = _id
+    spell.name = name
+    spell.magicSchool = magicSchool
+    spell.manaCost = manaCost
+    spell.cooldown = cooldown
+    spell.tooltip = tooltip
+    spell.iconName = iconName
+    spell.targetType = targetType
+    spell.damageTarget = damageTarget
+    spell.damageSelf = damageSelf
+    spell.healingTarget = healingTarget
+    spell.healingSelf = healingSelf
+    spell.applyBuffTarget = applyBuffTarget
+    spell.applyBuffSelf = applyBuffSelf
+    spell.applyBuffDuration = applyBuffDuration
+
+    const updatedSpell = await spell.save()
+
+    console.log(updateSpell, 'updaterad')
+    res.json(updatedSpell)
+  } else {
+    res.status(404)
+    throw new Error('Spell not found')
+  }
+}
+
+export { createSpell, deleteSpell, getAllSpells, updateSpell }

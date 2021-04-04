@@ -7,8 +7,10 @@ import {
   createSpell,
   getAllSpells,
   deleteSpell,
+  updateSpell,
 } from '../../../actions/adminActions'
 import { useForm } from '../../../customHooks/useForm'
+import ItemList from './ItemList'
 
 const CreateSpell = ({ toggle }: any) => {
   const dispatch = useDispatch()
@@ -19,6 +21,7 @@ const CreateSpell = ({ toggle }: any) => {
   }, [dispatch])
 
   const initialState = {
+    _id: '',
     name: '',
     magicSchool: 'Fire',
     manaCost: '',
@@ -32,7 +35,7 @@ const CreateSpell = ({ toggle }: any) => {
     healingSelf: '',
     applyBuffTarget: '',
     applyBuffSelf: '',
-    applyBuffDuration: ''
+    applyBuffDuration: '',
   }
 
   type ObjectAlias = typeof initialState
@@ -41,12 +44,19 @@ const CreateSpell = ({ toggle }: any) => {
     _id: string
   }
 
-  const { formData, handleChange, handleSubmit, errors, resetForm } = useForm(
-    initialState,
-    createSpell
-  )
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    errors,
+    resetForm,
+    setFormData,
+    updateMode,
+    setUpdateMode,
+  } = useForm(initialState, createSpell, updateSpell)
 
-  const { name,
+  const {
+    name,
     magicSchool,
     tooltip,
     iconName,
@@ -59,7 +69,14 @@ const CreateSpell = ({ toggle }: any) => {
     healingSelf,
     applyBuffTarget,
     applyBuffSelf,
-    applyBuffDuration } = formData
+    applyBuffDuration,
+  } = formData
+
+  const handleUpdate = (id: string) => {
+    const currentSpell = currentSpells.find((spell: Spell) => spell._id === id)
+    setUpdateMode(true)
+    setFormData(currentSpell)
+  }
 
   return (
     <div className="container-fluid" style={{ marginTop: 40, width: 500 }}>
@@ -233,7 +250,11 @@ const CreateSpell = ({ toggle }: any) => {
             isInvalid={checkIsInvalid(errors, 'applyBuffDuration')}
           ></Form.Control>
         </Form.Group>
-        <input type="submit" className="btn btn-success" value="Create spell" />
+        <input
+          type="submit"
+          className="btn btn-success"
+          value={updateMode ? 'Update Spell' : 'Create spell'}
+        />
         <input
           type="button"
           className="btn btn-info"
@@ -247,16 +268,18 @@ const CreateSpell = ({ toggle }: any) => {
           onClick={toggle}
         />
       </Form>
-      <h1>Spells already created</h1>
-      {currentSpells.map((spell: Spell) => (
-        <div>
-          <div> <img src={`/assets/icons/${spell.iconName}`} height='45px' /> {spell.name} <button onClick={() => dispatch(deleteSpell({ id: spell._id }))}>
-            Delete
-          </button></div>
-          <br />
-          <br />
-        </div>
-      ))}
+      <h1 style={{ marginTop: 20 }}>Spells already created</h1>
+      {currentSpells
+        .sort((a: Spell, b: Spell) => a.name.localeCompare(b.name))
+        .map((spell: Spell) => (
+          <ItemList
+            name={spell.name}
+            img={`/assets/icons/${spell.iconName}`}
+            id={spell._id}
+            deleteHandler={() => dispatch(deleteSpell({ id: spell._id }))}
+            updateHandler={() => handleUpdate(spell._id)}
+          />
+        ))}
     </div>
   )
 }

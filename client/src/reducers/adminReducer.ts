@@ -33,6 +33,14 @@ const adminReducer = (state = initialState, action: any) => {
         ...state,
         spells: [...state.spells, action.payload],
       }
+    case types.UPDATE_SPELL:
+      return {
+        ...state,
+        spells: [
+          ...filterIdFromArray(state.spells, action.payload._id),
+          action.payload,
+        ],
+      }
     case types.GET_ALL_SPELLS:
       return {
         ...state,
