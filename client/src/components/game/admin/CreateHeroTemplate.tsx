@@ -25,6 +25,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     attackRating: '',
     defenceRating: '',
     classType: '',
+    iconName: 'hero_artificer.png',
     healthPoints: '',
     manaPoints: '',
   }
@@ -45,6 +46,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     attackRating,
     defenceRating,
     classType,
+    iconName,
     healthPoints,
     manaPoints,
   } = formData
@@ -69,28 +71,30 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             isInvalid={checkIsInvalid(errors, 'name')}
           />
         </Form.Group>
-        <Form.Group>
-          <Form.Label>Attack Rating</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Attack Rating"
-            name="attackRating"
-            value={attackRating}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'attackRating')}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Defence Rating</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Defence Rating"
-            name="defenceRating"
-            value={defenceRating}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'defenceRating')}
-          />
-        </Form.Group>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Attack Rating</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Attack Rating"
+              name="attackRating"
+              value={attackRating}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'attackRating')}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Defence Rating</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Defence Rating"
+              name="defenceRating"
+              value={defenceRating}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'defenceRating')}
+            />
+          </Form.Group>
+        </Form.Row>
         <Form.Group>
           <Form.Label>Class type</Form.Label>
           <Form.Control
@@ -102,32 +106,52 @@ const CreateHeroTemplate = ({ toggle }: any) => {
             isInvalid={checkIsInvalid(errors, 'classType')}
           />
         </Form.Group>
-
+        <Form.Text muted>
+          Name class archetype, for example 'Artificer'
+        </Form.Text>
         <Form.Group>
-          <Form.Label>Health Points</Form.Label>
+          <Form.Label><div style={{ height: "45px" }}><img src={`/assets/icons/characters/${iconName}`} height='45px' />Icon</div></Form.Label>
           <Form.Control
-            type="number"
-            placeholder="Health Points"
-            name="healthPoints"
-            value={healthPoints}
+            type="text"
+            placeholder="hero_artificer.png"
+            name="iconName"
+            value={iconName}
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'healthPoints')}
-          />
+            isInvalid={checkIsInvalid(errors, 'iconName')}
+          ></Form.Control>
+          <Form.Text muted>
+            Name of the file, for example 'hero_arficier.png'
+          </Form.Text>
         </Form.Group>
-        <Form.Group>
-          <Form.Label>Mana Points</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Mana Points"
-            name="manaPoints"
-            value={manaPoints}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'manaPoints')}
-          />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid input.
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Health Points</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Health Points"
+              name="healthPoints"
+              value={healthPoints}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'healthPoints')}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Mana Points</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Mana Points"
+              name="manaPoints"
+              value={manaPoints}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'manaPoints')}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please provide a valid input.
           </Form.Control.Feedback>
-        </Form.Group>
+          </Form.Group>
+        </Form.Row>
         <input
           type="submit"
           className="btn btn-success"
@@ -147,19 +171,22 @@ const CreateHeroTemplate = ({ toggle }: any) => {
         />
       </Form>
       <h1>Heros already created</h1>
-      {currentHeroTemplates.map((hero: Hero) => (
-        <div>
-          <div>{hero.name}</div>
-          <Button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => dispatch(deleteHeroTemplate({ id: hero._id }))}
-          >
-            <i className="fas fa-trash-alt"></i>
-          </Button>
-        </div>
-      ))}
-    </div>
+      {
+        currentHeroTemplates.map((hero: Hero) => (
+          <div>
+            <div><img src={`/assets/icons/characters/${hero.iconName}`} height='45px' /> {hero.name}
+              <Button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => dispatch(deleteHeroTemplate({ id: hero._id }))}
+              >
+                <i className="fas fa-trash-alt"></i>
+              </Button>
+            </div>
+          </div>
+        ))
+      }
+    </div >
   )
 }
 

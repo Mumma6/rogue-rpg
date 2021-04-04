@@ -40,7 +40,6 @@ const spellModel = new mongoose.Schema({
     required: true,
   },
   iconName: {
-    // läggs i en asset map i frontend
     type: String,
     required: true,
   },

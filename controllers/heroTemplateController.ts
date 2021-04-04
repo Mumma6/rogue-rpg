@@ -10,6 +10,7 @@ const createHeroTemplate = async (req: Request, res: Response) => {
       attackRating,
       defenceRating,
       classType,
+      iconName,
       healthPoints,
       manaPoints,
     } = <IHeroTemplate>req.body
@@ -25,6 +26,7 @@ const createHeroTemplate = async (req: Request, res: Response) => {
       attackRating,
       defenceRating,
       classType,
+      iconName,
       healthPoints,
       manaPoints,
     })
