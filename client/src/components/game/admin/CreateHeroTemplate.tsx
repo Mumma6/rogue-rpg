@@ -52,9 +52,10 @@ const CreateHeroTemplate = ({ toggle }: any) => {
   } = formData
 
   return (
-    <div className="container-fluid" style={{ marginTop: 40, width: 500 }}>
+    <div className="container-fluid">
+      <div className="container-fluid"  style={{ marginTop: 40, width: 500, float:'left' }}>
       <p className="lead">
-        <i className="fas fa-user" /> Create hero template
+          <h2><i className="fas fa-user-plus" /> Create New Hero Template</h2>
       </p>
       <Form
         className="form"
@@ -170,7 +171,11 @@ const CreateHeroTemplate = ({ toggle }: any) => {
           onClick={toggle}
         />
       </Form>
-      <h1>Heros already created</h1>
+      </div>
+      <div className="container-fluid"  style={{ marginTop: 40, width: 500, float:'right' }}>
+      <p className="lead">
+          <h2><i className="fas fa-user-edit" /> Existing Hero Templates</h2>
+      </p>
       {
         currentHeroTemplates.map((hero: Hero) => (
           <div>
@@ -186,6 +191,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
           </div>
         ))
       }
+      </div>
     </div >
   )
 }
