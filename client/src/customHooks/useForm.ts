@@ -1,8 +1,13 @@
 import { useState, FormEvent, ChangeEvent, useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 
-export function useForm<Input>(state: Input, dispatchFunc: Function) {
+export function useForm<Input>(
+  state: Input,
+  dispatchCreateFunc: Function,
+  dispatchUpdateFunc?: Function
+) {
   const [formData, setFormData] = useState<Input>(state)
+  const [updateMode, setUpdateMode] = useState<Boolean>(false)
   const [errors, setErros] = useState<string[]>([])
   const dispatch = useDispatch()
 
@@ -17,6 +22,7 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
 
   const resetForm = useCallback(() => {
     setFormData(state)
+    setUpdateMode(false)
     setErros([])
   }, [state])
 
@@ -30,14 +36,32 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
     (input: string) => input === ''
   )
 
-  const handleDispatch = useCallback(() => {
+  const handleCreateDispatch = useCallback(() => {
     resetForm()
-    dispatch(dispatchFunc(formData))
-  }, [dispatch, dispatchFunc, formData, resetForm])
+    dispatch(dispatchCreateFunc(formData))
+  }, [dispatch, dispatchCreateFunc, formData, resetForm])
+
+  const handleUpdateDispatch = useCallback(() => {
+    resetForm()
+    if (dispatchUpdateFunc) {
+      dispatch(dispatchUpdateFunc(formData))
+    }
+  }, [dispatch, dispatchUpdateFunc, formData, resetForm])
 
   const submit = useCallback(
-    () => (hasErrors ? setErros(getEmptyStrings(formData)) : handleDispatch()),
-    [formData, handleDispatch, hasErrors]
+    () =>
+      hasErrors
+        ? setErros(getEmptyStrings(formData))
+        : updateMode
+        ? handleUpdateDispatch()
+        : handleCreateDispatch(),
+    [
+      formData,
+      handleCreateDispatch,
+      handleUpdateDispatch,
+      hasErrors,
+      updateMode,
+    ]
   )
 
   const handleSubmit = useCallback(
@@ -54,5 +78,8 @@ export function useForm<Input>(state: Input, dispatchFunc: Function) {
     handleSubmit,
     errors,
     resetForm,
+    setFormData,
+    updateMode,
+    setUpdateMode,
   }
 }

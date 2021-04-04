@@ -7,8 +7,10 @@ import {
   createSpell,
   getAllSpells,
   deleteSpell,
+  updateSpell,
 } from '../../../actions/adminActions'
 import { useForm } from '../../../customHooks/useForm'
+import ItemList from './ItemList'
 
 const CreateSpell = ({ toggle }: any) => {
   const dispatch = useDispatch()
@@ -19,6 +21,7 @@ const CreateSpell = ({ toggle }: any) => {
   }, [dispatch])
 
   const initialState = {
+    _id: '',
     name: '',
     magicSchool: 'Fire',
     manaCost: '',
@@ -32,7 +35,7 @@ const CreateSpell = ({ toggle }: any) => {
     healingSelf: '',
     applyBuffTarget: '',
     applyBuffSelf: '',
-    applyBuffDuration: ''
+    applyBuffDuration: '',
   }
 
   type ObjectAlias = typeof initialState
@@ -41,12 +44,19 @@ const CreateSpell = ({ toggle }: any) => {
     _id: string
   }
 
-  const { formData, handleChange, handleSubmit, errors, resetForm } = useForm(
-    initialState,
-    createSpell
-  )
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    errors,
+    resetForm,
+    setFormData,
+    updateMode,
+    setUpdateMode,
+  } = useForm(initialState, createSpell, updateSpell)
 
-  const { name,
+  const {
+    name,
     magicSchool,
     tooltip,
     iconName,
@@ -59,7 +69,14 @@ const CreateSpell = ({ toggle }: any) => {
     healingSelf,
     applyBuffTarget,
     applyBuffSelf,
-    applyBuffDuration } = formData
+    applyBuffDuration,
+  } = formData
+
+  const handleUpdate = (id: string) => {
+    const currentSpell = currentSpells.find((spell: Spell) => spell._id === id)
+    setUpdateMode(true)
+    setFormData(currentSpell)
+  }
 
   return (
     <div className="container-fluid" style={{ marginTop: 40, width: 700 }}>
@@ -89,7 +106,9 @@ const CreateSpell = ({ toggle }: any) => {
               as="select"
               name="magicSchool"
               value={magicSchool}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
             >
               <option>Fire</option>
               <option>Cold</option>
@@ -107,7 +126,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Mana Cost"
               name="manaCost"
               value={manaCost}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'manaCost')}
             ></Form.Control>
           </Form.Group>
@@ -119,7 +140,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="(Rounds)"
               name="cooldown"
               value={cooldown}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'cooldown')}
             ></Form.Control>
           </Form.Group>
@@ -134,32 +157,41 @@ const CreateSpell = ({ toggle }: any) => {
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             isInvalid={checkIsInvalid(errors, 'tooltip')}
           ></Form.Control>
-          <Form.Text muted>
-            Text displayed in spell tooltip.
-        </Form.Text>
+          <Form.Text muted>Text displayed in spell tooltip.</Form.Text>
         </Form.Group>
         <Form.Row>
           <Form.Group>
-            <Form.Label><div style={{ height: "45px" }}><img src={`/assets/icons/${iconName}`} height='45px' />Icon</div></Form.Label>
+            <Form.Label>
+              <div style={{ height: '45px' }}>
+                <img src={`/assets/icons/${iconName}`} height="45px" />
+                Icon
+              </div>
+            </Form.Label>
             <Form.Control
               type="text"
               placeholder="book-magic.png"
               name="iconName"
               value={iconName}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'iconName')}
             ></Form.Control>
             <Form.Text muted>
               Name of the file, example 'book-magic.png'
-        </Form.Text>
+            </Form.Text>
           </Form.Group>
           <Form.Group>
-            <Form.Label><div style={{ height: "45px" }}>Target Type</div></Form.Label>
+            <Form.Label>
+              <div style={{ height: '45px' }}>Target Type</div>
+            </Form.Label>
             <Form.Control
               as="select"
               name="targetType"
               value={targetType}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
             >
               <option>SpecificEnemy</option>
               <option>SpecificParty</option>
@@ -178,7 +210,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Damage to target"
               name="damageTarget"
               value={damageTarget}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'damageTarget')}
             ></Form.Control>
           </Form.Group>
@@ -190,7 +224,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Damage to Self"
               name="damageSelf"
               value={damageSelf}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'damageSelf')}
             ></Form.Control>
           </Form.Group>
@@ -204,7 +240,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Healing to Target"
               name="healingTarget"
               value={healingTarget}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'healingTarget')}
             ></Form.Control>
           </Form.Group>
@@ -216,7 +254,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Healing to Self"
               name="healingSelf"
               value={healingSelf}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'healingSelf')}
             ></Form.Control>
           </Form.Group>
@@ -230,7 +270,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="ID of buff to Target"
               name="applyBuffTarget"
               value={applyBuffTarget}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'applyBuffTarget')}
             ></Form.Control>
           </Form.Group>
@@ -242,7 +284,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="ID of buff to Self"
               name="applyBuffSelf"
               value={applyBuffSelf}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'applyBuffSelf')}
             ></Form.Control>
           </Form.Group>
@@ -254,13 +298,15 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Duration of the buff (Rounds)"
               name="applyBuffDuration"
               value={applyBuffDuration}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'applyBuffDuration')}
             ></Form.Control>
           </Form.Group>
         </Form.Row>
 
-        <input type="submit" className="btn btn-success" value="Create spell" />
+        <input type="submit" className="btn btn-success" value={updateMode ? 'Update Spell' : 'Create spell'} />
         <input
           type="button"
           className="btn btn-info"
@@ -274,16 +320,18 @@ const CreateSpell = ({ toggle }: any) => {
           onClick={toggle}
         />
       </Form>
-      <h1>Spells already created</h1>
-      {currentSpells.map((spell: Spell) => (
-        <div>
-          <div> <img src={`/assets/icons/${spell.iconName}`} height='45px' /> {spell.name} <button onClick={() => dispatch(deleteSpell({ id: spell._id }))}>
-            Delete
-          </button></div>
-          <br />
-          <br />
-        </div>
-      ))}
+      <h1 style={{ marginTop: 20 }}>Spells already created</h1>
+      {currentSpells
+        .sort((a: Spell, b: Spell) => a.name.localeCompare(b.name))
+        .map((spell: Spell) => (
+          <ItemList
+            name={spell.name}
+            img={`/assets/icons/${spell.iconName}`}
+            id={spell._id}
+            deleteHandler={() => dispatch(deleteSpell({ id: spell._id }))}
+            updateHandler={() => handleUpdate(spell._id)}
+          />
+        ))}
     </div>
   )
 }
