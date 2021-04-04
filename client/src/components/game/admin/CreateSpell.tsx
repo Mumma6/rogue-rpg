@@ -62,7 +62,7 @@ const CreateSpell = ({ toggle }: any) => {
     applyBuffDuration } = formData
 
   return (
-    <div className="container-fluid" style={{ marginTop: 40, width: 500 }}>
+    <div className="container-fluid" style={{ marginTop: 40, width: 700 }}>
       <p className="lead">
         <i className="fas fa-magic" /> Create spell
       </p>
@@ -81,44 +81,49 @@ const CreateSpell = ({ toggle }: any) => {
             isInvalid={checkIsInvalid(errors, 'name')}
           ></Form.Control>
         </Form.Group>
-        <Form.Group>
-          <Form.Label>Magic school</Form.Label>
-          <Form.Control
-            as="select"
-            name="magicSchool"
-            value={magicSchool}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-          >
-            <option>Fire</option>
-            <option>Cold</option>
-            <option>Lightning</option>
-            <option>Physical</option>
-            <option>Holy</option>
-            <option>Shadow</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Mana Cost</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Mana Cost"
-            name="manaCost"
-            value={manaCost}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'manaCost')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Cooldown</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Cooldown of the spell (Rounds)"
-            name="cooldown"
-            value={cooldown}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'cooldown')}
-          ></Form.Control>
-        </Form.Group>
+
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Magic school</Form.Label>
+            <Form.Control
+              as="select"
+              name="magicSchool"
+              value={magicSchool}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+            >
+              <option>Fire</option>
+              <option>Cold</option>
+              <option>Lightning</option>
+              <option>Physical</option>
+              <option>Holy</option>
+              <option>Shadow</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Mana Cost</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Mana Cost"
+              name="manaCost"
+              value={manaCost}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'manaCost')}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Cooldown</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="(Rounds)"
+              name="cooldown"
+              value={cooldown}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'cooldown')}
+            ></Form.Control>
+          </Form.Group>
+        </Form.Row>
         <Form.Group>
           <Form.Label>Tooltip</Form.Label>
           <Form.Control
@@ -129,110 +134,132 @@ const CreateSpell = ({ toggle }: any) => {
             onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
             isInvalid={checkIsInvalid(errors, 'tooltip')}
           ></Form.Control>
+          <Form.Text muted>
+            Text displayed in spell tooltip.
+        </Form.Text>
         </Form.Group>
-        <Form.Group>
-          <Form.Label><div style={{height: "45px"}}><img src={`/assets/icons/${iconName}`} height='45px' />Icon</div></Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="book-magic.png"
-            name="iconName"
-            value={iconName}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'iconName')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Target Type</Form.Label>
-          <Form.Control
-            as="select"
-            name="targetType"
-            value={targetType}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-          >
-            <option>SpecificEnemy</option>
-            <option>SpecificParty</option>
-            <option>Self</option>
-            <option>AllEnemy</option>
-            <option>AllParty</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Damage to Target</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Damage to target"
-            name="damageTarget"
-            value={damageTarget}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'damageTarget')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Damage to Self</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Damage to Self"
-            name="damageSelf"
-            value={damageSelf}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'damageSelf')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Healing to Target</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Healing to Target"
-            name="healingTarget"
-            value={healingTarget}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'healingTarget')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Healing to Self</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Healing to Self"
-            name="healingSelf"
-            value={healingSelf}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'healingSelf')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Buff to Target</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="ID of buff to Target"
-            name="applyBuffTarget"
-            value={applyBuffTarget}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'applyBuffTarget')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Buff to Self</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="ID of buff to Self"
-            name="applyBuffSelf"
-            value={applyBuffSelf}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'applyBuffSelf')}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Buff Duration</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Duration of the buff (Rounds)"
-            name="applyBuffDuration"
-            value={applyBuffDuration}
-            onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
-            isInvalid={checkIsInvalid(errors, 'applyBuffDuration')}
-          ></Form.Control>
-        </Form.Group>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label><div style={{ height: "45px" }}><img src={`/assets/icons/${iconName}`} height='45px' />Icon</div></Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="book-magic.png"
+              name="iconName"
+              value={iconName}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'iconName')}
+            ></Form.Control>
+            <Form.Text muted>
+              Name of the file, example 'book-magic.png'
+        </Form.Text>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label><div style={{ height: "45px" }}>Target Type</div></Form.Label>
+            <Form.Control
+              as="select"
+              name="targetType"
+              value={targetType}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+            >
+              <option>SpecificEnemy</option>
+              <option>SpecificParty</option>
+              <option>Self</option>
+              <option>AllEnemy</option>
+              <option>AllParty</option>
+            </Form.Control>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Damage to Target</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Damage to target"
+              name="damageTarget"
+              value={damageTarget}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'damageTarget')}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Damage to Self</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Damage to Self"
+              name="damageSelf"
+              value={damageSelf}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'damageSelf')}
+            ></Form.Control>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Healing to Target</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Healing to Target"
+              name="healingTarget"
+              value={healingTarget}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'healingTarget')}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Healing to Self</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Healing to Self"
+              name="healingSelf"
+              value={healingSelf}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'healingSelf')}
+            ></Form.Control>
+          </Form.Group>
+        </Form.Row>
+        <Form.Row>
+          <Form.Group>
+            <Form.Label>Buff to Target</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="ID of buff to Target"
+              name="applyBuffTarget"
+              value={applyBuffTarget}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'applyBuffTarget')}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Buff to Self</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="ID of buff to Self"
+              name="applyBuffSelf"
+              value={applyBuffSelf}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'applyBuffSelf')}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Buff Duration</Form.Label>
+            <Form.Control
+              type="number"
+              min="0"
+              placeholder="Duration of the buff (Rounds)"
+              name="applyBuffDuration"
+              value={applyBuffDuration}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              isInvalid={checkIsInvalid(errors, 'applyBuffDuration')}
+            ></Form.Control>
+          </Form.Group>
+        </Form.Row>
+
         <input type="submit" className="btn btn-success" value="Create spell" />
         <input
           type="button"

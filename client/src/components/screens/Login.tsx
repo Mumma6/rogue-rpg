@@ -26,6 +26,7 @@ const Login: React.FC = () => {
         <i className="fas fa-user" /> Log in to your account
       </p>
       <Form
+        autoComplete="on"
         className="form"
         onSubmit={(evt: FormEvent<HTMLFormElement>) => handleSubmit(evt)}
       >
@@ -52,7 +53,7 @@ const Login: React.FC = () => {
             isInvalid={checkIsInvalid(errors, 'password')}
           />
         </Form.Group>
-        <input type="submit" className="btn btn-success" value="Log in" />
+        <input type="submit" className="btn btn-success" value="Login"/>
         <input
           type="button"
           className="btn btn-info"
@@ -61,7 +62,6 @@ const Login: React.FC = () => {
         />
       </Form>
       <p style={{ marginTop: 40 }}>Dont have an account?</p>
-
       <button
         type="submit"
         className="btn btn-info"
