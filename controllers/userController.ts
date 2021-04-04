@@ -14,6 +14,7 @@ const comparePassword = async (password: string, userPassword: string) =>
 // @route   POST /api/users/login
 const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body
+
   const user = await User.findOne({ email })
   console.log(user)
 
