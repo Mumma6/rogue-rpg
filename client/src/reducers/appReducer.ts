@@ -6,7 +6,6 @@ const initialState = {
 }
 
 interface IUser {
-  name: string
   email: string
   role: string
 }
@@ -34,6 +33,12 @@ const appReducer = (state = initialState, action: IActions) => {
         user: action.payload as IUser,
         appState: 'in-game',
       }
+    case types.VERIFY_JWT:
+      return {
+        ...state,
+        user: action.payload as IUser,
+        appState: 'in-game',
+      }
     case types.DISPLAY_LOGIN:
       return {
         ...state,
@@ -50,6 +55,7 @@ const appReducer = (state = initialState, action: IActions) => {
         appState: 'in-game',
       }
     case types.LOG_OUT:
+      localStorage.removeItem('rougelike_jwt')
       return initialState
     default:
       return state

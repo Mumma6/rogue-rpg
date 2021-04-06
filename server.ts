@@ -13,6 +13,8 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+
+
 app.use('/api/users', users)
 app.use('/api/spell', spells)
 app.use('/api/items/type', itemTypes)
