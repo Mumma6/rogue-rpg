@@ -79,4 +79,44 @@ const getAllHeroTemplates = async (req: Request, res: Response) => {
   }
 }
 
-export { createHeroTemplate, deleteHeroTemplate, getAllHeroTemplates }
+// @desc    update hero template
+// @route   POST /api/hero/template/update
+const updateHeroTemplate = async (req: Request, res: Response) => {
+  const {
+    _id,
+    name,
+    attackRating,
+    defenceRating,
+    classType,
+    iconName,
+    healthPoints,
+    manaPoints,
+  } = <IHeroTemplate>req.body
+
+  const template = await HeroTemplate.findById(req.body._id)
+
+  if (template) {
+    template._id = _id
+    template.name = name
+    template.attackRating = attackRating
+    template.defenceRating = defenceRating
+    template.classType = classType
+    template.iconName = iconName
+    template.healthPoints = healthPoints
+    template.manaPoints = manaPoints
+
+    const updatedTemplate = await template.save()
+
+    res.json(updatedTemplate)
+  } else {
+    res.status(404)
+    throw new Error('Template not found not found')
+  }
+}
+
+export {
+  createHeroTemplate,
+  deleteHeroTemplate,
+  getAllHeroTemplates,
+  updateHeroTemplate,
+}

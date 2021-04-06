@@ -21,7 +21,6 @@ const CreateSpell = ({ toggle }: any) => {
   }, [dispatch])
 
   const initialState = {
-    _id: '',
     name: '',
     magicSchool: 'Fire',
     manaCost: '',
@@ -80,10 +79,15 @@ const CreateSpell = ({ toggle }: any) => {
 
   return (
     <div className="container-fluid">
-      <div className="container-fluid"  style={{ marginTop: 40, width: 500, float:'left' }}>
+      <div
+        className="container-fluid"
+        style={{ marginTop: 40, width: 500, float: 'left' }}
+      >
         <p className="lead">
-          <h2><i className="fas fa-magic" /> Create New Spell</h2>
-      </p>
+          <h2>
+            <i className="fas fa-magic" /> Create New Spell
+          </h2>
+        </p>
         <Form
           className="form"
           onSubmit={(evt: FormEvent<HTMLFormElement>) => handleSubmit(evt)}
@@ -95,7 +99,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Name"
               name="name"
               value={name}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'name')}
             ></Form.Control>
           </Form.Group>
@@ -155,7 +161,9 @@ const CreateSpell = ({ toggle }: any) => {
               placeholder="Tooltip"
               name="tooltip"
               value={tooltip}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'tooltip')}
             ></Form.Control>
             <Form.Text muted>Text displayed in spell tooltip.</Form.Text>
@@ -165,8 +173,8 @@ const CreateSpell = ({ toggle }: any) => {
               <Form.Label>
                 <div style={{ height: '45px' }}>
                   <img src={`/assets/icons/${iconName}`} height="45px" />
-                Icon
-              </div>
+                  Icon
+                </div>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -180,7 +188,7 @@ const CreateSpell = ({ toggle }: any) => {
               ></Form.Control>
               <Form.Text muted>
                 Name of the file, example 'book-magic.png'
-            </Form.Text>
+              </Form.Text>
             </Form.Group>
             <Form.Group>
               <Form.Label>
@@ -307,7 +315,11 @@ const CreateSpell = ({ toggle }: any) => {
             </Form.Group>
           </Form.Row>
 
-          <input type="submit" className="btn btn-success" value={updateMode ? 'Update Spell' : 'Create spell'} />
+          <input
+            type="submit"
+            className="btn btn-success"
+            value={updateMode ? 'Update Spell' : 'Create spell'}
+          />
           <input
             type="button"
             className="btn btn-info"
@@ -322,10 +334,15 @@ const CreateSpell = ({ toggle }: any) => {
           />
         </Form>
       </div>
-      <div className="container-fluid"  style={{ marginTop: 40, width: 500, float:'right' }}>
-      <p className="lead">
-          <h2><i className="fas fa-magic" /> Spells already created</h2>
-      </p>
+      <div
+        className="container-fluid"
+        style={{ marginTop: 40, width: 500, float: 'right' }}
+      >
+        <p className="lead">
+          <h2>
+            <i className="fas fa-magic" /> Spells already created
+          </h2>
+        </p>
         {currentSpells
           .sort((a: Spell, b: Spell) => a.name.localeCompare(b.name))
           .map((spell: Spell) => (

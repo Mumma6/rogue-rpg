@@ -1,9 +1,11 @@
 import SpellModel, { ISpellModel } from '../models/spellModel'
 import { Request, Response } from 'express'
+import { create } from './controllerFunctions'
 
 // @desc    Create spell
 // @route   POST /api/spell/create
-const createSpell = async (req: Request, res: Response) => {
+
+const createSpell2 = async (req: Request, res: Response) => {
   try {
     const {
       name,
@@ -75,6 +77,10 @@ const createSpell = async (req: Request, res: Response) => {
   }
 }
 
+const createSpell = create({
+  model: SpellModel,
+})
+
 // @desc    delete spell
 // @route   POST /api/spell/delete
 const deleteSpell = async (req: Request, res: Response) => {
@@ -123,8 +129,6 @@ const updateSpell = async (req: Request, res: Response) => {
   } = <ISpellModel>req.body
 
   const spell = await SpellModel.findById(req.body._id)
-
-  console.log(spell, 'spell från body')
 
   if (spell) {
     spell._id = _id

@@ -2,6 +2,7 @@ import dispatchCurried from './actionsUtils'
 import {
   createHeroConfig,
   createItemTypeConfig,
+  updateHeroConfig,
   createSpellsConfig,
   deleteHeroConfig,
   deleteItemTypeConfig,
@@ -19,6 +20,9 @@ export const getAllHeroTemplates = () => dispatchCurried(getAllHerosConfig)
 
 export const deleteHeroTemplate = (data: object) =>
   dispatchCurried(deleteHeroConfig, data)
+
+export const updateHeroTemplate = (data: object) =>
+  dispatchCurried(updateHeroConfig, data)
 
 export const createSpell = (data: object) =>
   dispatchCurried(createSpellsConfig, data)
