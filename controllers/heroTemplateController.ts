@@ -1,9 +1,19 @@
 import HeroTemplate, { IHeroTemplate } from '../models/heroTemplateModel'
 import { Request, Response } from 'express'
+var jwt = require('jsonwebtoken');
+var config = require('../config');
 
 // @desc    Create hero template
 // @route   POST /api/hero/template/create
 const createHeroTemplate = async (req: Request, res: Response) => {
+  
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, config.jwtSecret, function (err: Error) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+  });
+
   try {
     const {
       name,
@@ -56,6 +66,14 @@ const createHeroTemplate = async (req: Request, res: Response) => {
 // @desc    delete hero template
 // @route   POST /api/hero/template/delete
 const deleteHeroTemplate = async (req: Request, res: Response) => {
+
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, config.jwtSecret, function (err: Error) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+  });
+
   const template = await HeroTemplate.findById(req.body.id)
   if (template) {
     await template.remove()
@@ -69,6 +87,14 @@ const deleteHeroTemplate = async (req: Request, res: Response) => {
 // @desc    fetch all hero template
 // @route   POST /api/hero/template/
 const getAllHeroTemplates = async (req: Request, res: Response) => {
+    
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, config.jwtSecret, function (err: Error) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+  });
+
   const templates = await HeroTemplate.find({}) // empty filter will return all docs
 
   if (templates) {

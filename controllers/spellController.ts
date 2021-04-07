@@ -1,11 +1,26 @@
 import SpellModel, { ISpellModel } from '../models/spellModel'
 import { Request, Response } from 'express'
+<<<<<<< HEAD
 import { create } from './controllerFunctions'
 
 // @desc    Create spell
 // @route   POST /api/spell/create
 
 const createSpell2 = async (req: Request, res: Response) => {
+=======
+var jwt = require('jsonwebtoken');
+var config = require('../config');
+
+// @desc    Create spell
+// @route   POST /api/spell/create
+const createSpell = async (req: Request, res: Response) => {
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, config.jwtSecret, function (err: Error) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+  });
+>>>>>>> main
   try {
     const {
       name,
@@ -97,6 +112,15 @@ const deleteSpell = async (req: Request, res: Response) => {
 // @desc    fetch all spells
 // @route   POST /api/spell/
 const getAllSpells = async (req: Request, res: Response) => {
+
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, config.jwtSecret, function (err: Error) {
+    console.log(err)
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+  });
+
   const spells = await SpellModel.find({}) // empty filter will return all docs
 
   if (spells) {
@@ -110,6 +134,14 @@ const getAllSpells = async (req: Request, res: Response) => {
 // @desc    update spell
 // @route   POST /api/spell/update
 const updateSpell = async (req: Request, res: Response) => {
+  
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, config.jwtSecret, function (err: Error) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+  });
+
   const {
     _id,
     name,
@@ -149,7 +181,7 @@ const updateSpell = async (req: Request, res: Response) => {
 
     const updatedSpell = await spell.save()
 
-    console.log(updateSpell, 'updaterad')
+    //console.log(updateSpell, 'updaterad')
     res.json(updatedSpell)
   } else {
     res.status(404)

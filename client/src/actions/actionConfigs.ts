@@ -70,3 +70,8 @@ export const loginUserConfig: DispatchConfig = {
   API: `${USERS_API_ENDPOINT}/login`,
   type: types.LOGIN_USER,
 }
+
+export const verifyJWTConfig: DispatchConfig = {
+  API: `${USERS_API_ENDPOINT}/verifyjwt`,
+  type: types.VERIFY_JWT,
+}
