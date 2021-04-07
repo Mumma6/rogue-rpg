@@ -11,16 +11,10 @@ const dispatchCurried = (
 ) => async (dispatch: Function) => {
   const { API, type } = options
   try {
-    if (localStorage.getItem('rougelike_jwt')) {
-      var currentJWT = localStorage.getItem('rougelike_jwt')
-    }
-    else {
-      var currentJWT: string|null = "EMPTY"
-    }
     const res = await axios.post(API, data, {
       headers: {
-        'x-access-token': currentJWT
-      }
+        'x-access-token': localStorage.getItem('rougelike_jwt') || 'EMPTY',
+      },
     })
     if (res.data.rougelike_jwt) {
       localStorage.setItem('rougelike_jwt', res.data.rougelike_jwt)

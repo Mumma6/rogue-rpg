@@ -1,4 +1,4 @@
-import React, { FormEvent, ChangeEvent, useEffect } from 'react'
+import React, { FormEvent, ChangeEvent, useEffect, useState } from 'react'
 import { loginUser, verifyJWT } from '../../actions/userActions'
 import { useForm } from '../../customHooks/useForm'
 import { useDispatch } from 'react-redux'
@@ -6,9 +6,9 @@ import { Form } from 'react-bootstrap'
 import { checkIsInvalid } from '../../utils'
 import types from '../../reducers/types'
 
-
 const Login: React.FC = () => {
   const dispatch = useDispatch()
+  const [token] = useState(localStorage.getItem('rougelike_jwt'))
 
   const initialState = {
     email: '',
@@ -22,15 +22,13 @@ const Login: React.FC = () => {
 
   const { email, password } = formData
 
-
   useEffect(() => {
-    if (localStorage.getItem('rougelike_jwt')) {
-      let jwtFromStorage: any = localStorage.getItem('rougelike_jwt')
-      dispatch(verifyJWT({ 'jwt': jwtFromStorage }))
+    if (token) {
+      dispatch(verifyJWT({ jwt: token }))
     }
-  }, [])
+  }, [dispatch, token])
 
-  if (!localStorage.getItem('rougelike_jwt')) {
+  if (!token) {
     return (
       <div className="container-fluid" style={{ marginTop: 40, width: 400 }}>
         <p className="lead">
@@ -48,7 +46,9 @@ const Login: React.FC = () => {
               placeholder="Email"
               name="email"
               value={email}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'email')}
             />
           </Form.Group>
@@ -60,7 +60,9 @@ const Login: React.FC = () => {
               name="password"
               minLength={6}
               value={password}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'password')}
             />
           </Form.Group>
@@ -86,11 +88,8 @@ const Login: React.FC = () => {
         </button>
       </div>
     )
-  }
-  else {
-    return(
-      <div>Loading...</div>
-    )
+  } else {
+    return <div>Loading...</div>
   }
 }
 export default Login
