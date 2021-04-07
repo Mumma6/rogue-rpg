@@ -21,6 +21,11 @@ export const deleteHeroConfig: DispatchConfig = {
   type: types.DELETE_HEROTEMPLATE,
 }
 
+export const updateHeroConfig: DispatchConfig = {
+  API: `${HERO_TEMPLATE_API_ENDPOINT}/update`,
+  type: types.UPDATE_HEROTEMPLATE,
+}
+
 export const getAllSpellsConfig: DispatchConfig = {
   API: `${SPELL_API_ENDPOINT}/`,
   type: types.GET_ALL_SPELLS,

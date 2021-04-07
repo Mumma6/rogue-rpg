@@ -10,6 +10,7 @@ const dispatchCurried = (
   data?: object | undefined
 ) => async (dispatch: Function) => {
   const { API, type } = options
+  console.log(API)
   try {
     const res = await axios.post(API, data, {
       headers: {

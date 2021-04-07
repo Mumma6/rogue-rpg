@@ -8,63 +8,65 @@ const initialState = {
 const filterIdFromArray = (arr: any[], id: string) =>
   arr.filter(({ _id }) => _id !== id)
 
-const adminReducer = (state = initialState, action: any) => {
-  switch (action.type) {
+const adminReducer = (state = initialState, { payload, type }: any) => {
+  switch (type) {
     case types.CREATE_HEROTEMPLATE:
       return {
         ...state,
-        heroTemplates: [...state.heroTemplates, action.payload],
+        heroTemplates: [...state.heroTemplates, payload],
       }
     case types.GET_ALL_HEROTEMPLATE:
       return {
         ...state,
-        heroTemplates: action.payload,
+        heroTemplates: payload,
+      }
+    case types.UPDATE_HEROTEMPLATE:
+      return {
+        ...state,
+        heroTemplates: [
+          ...filterIdFromArray(state.heroTemplates, payload._id),
+          payload,
+        ],
       }
     case types.DELETE_HEROTEMPLATE:
       return {
         ...state,
-        heroTemplates: filterIdFromArray(
-          state.heroTemplates,
-          action.payload.id
-        ),
+        heroTemplates: filterIdFromArray(state.heroTemplates, payload.id),
       }
     case types.CREATE_SPELL:
       return {
         ...state,
-        spells: [...state.spells, action.payload],
+        spells: [...state.spells, payload],
       }
     case types.UPDATE_SPELL:
       return {
         ...state,
-        spells: [
-          ...filterIdFromArray(state.spells, action.payload._id),
-          action.payload,
-        ],
+        spells: [...filterIdFromArray(state.spells, payload._id), payload],
       }
     case types.GET_ALL_SPELLS:
       return {
         ...state,
-        spells: action.payload,
+        spells: payload,
       }
     case types.DELETE_SPELL:
       return {
         ...state,
-        spells: filterIdFromArray(state.spells, action.payload.id),
+        spells: filterIdFromArray(state.spells, payload.id),
       }
     case types.CREATE_ITEM_TYPE:
       return {
         ...state,
-        itemTypes: [...state.itemTypes, action.payload],
+        itemTypes: [...state.itemTypes, payload],
       }
     case types.GET_ALL_ITEM_TYPES:
       return {
         ...state,
-        itemTypes: action.payload,
+        itemTypes: payload,
       }
     case types.DELETE_ITEM_TYPE:
       return {
         ...state,
-        itemTypes: filterIdFromArray(state.itemTypes, action.payload.id),
+        itemTypes: filterIdFromArray(state.itemTypes, payload.id),
       }
     default:
       return state

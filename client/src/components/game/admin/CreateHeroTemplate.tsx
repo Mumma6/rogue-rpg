@@ -6,9 +6,11 @@ import {
   createHeroTemplate,
   getAllHeroTemplates,
   deleteHeroTemplate,
+  updateHeroTemplate,
 } from '../../../actions/adminActions'
 import { useForm } from '../../../customHooks/useForm'
 import { checkIsInvalid } from '../../../utils'
+import ItemList from './ItemList'
 
 const CreateHeroTemplate = ({ toggle }: any) => {
   const dispatch = useDispatch()
@@ -36,10 +38,16 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     _id: string
   }
 
-  const { formData, handleChange, handleSubmit, errors, resetForm } = useForm(
-    initialState,
-    createHeroTemplate
-  )
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    errors,
+    resetForm,
+    setFormData,
+    updateMode,
+    setUpdateMode,
+  } = useForm(initialState, createHeroTemplate, updateHeroTemplate)
 
   const {
     name,
@@ -51,11 +59,18 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     manaPoints,
   } = formData
 
+  const handleUpdate = (id: string) => {
+    const currentHeroTemplate = currentHeroTemplates.find(
+      (template: Hero) => template._id === id
+    )
+    setUpdateMode(true)
+    setFormData(currentHeroTemplate)
+  }
+
   return (
-    <div className="container-fluid">
-      <div className="container-fluid"  style={{ marginTop: 40, width: 500, float:'left' }}>
+    <div className="container-fluid" style={{ marginTop: 40, width: 500 }}>
       <p className="lead">
-          <h2><i className="fas fa-user-plus" /> Create New Hero Template</h2>
+        <i className="fas fa-user" /> Create hero template
       </p>
       <Form
         className="form"
@@ -80,7 +95,9 @@ const CreateHeroTemplate = ({ toggle }: any) => {
               placeholder="Attack Rating"
               name="attackRating"
               value={attackRating}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'attackRating')}
             />
           </Form.Group>
@@ -91,7 +108,9 @@ const CreateHeroTemplate = ({ toggle }: any) => {
               placeholder="Defence Rating"
               name="defenceRating"
               value={defenceRating}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'defenceRating')}
             />
           </Form.Group>
@@ -111,7 +130,12 @@ const CreateHeroTemplate = ({ toggle }: any) => {
           Name class archetype, for example 'Artificer'
         </Form.Text>
         <Form.Group>
-          <Form.Label><div style={{ height: "45px" }}><img src={`/assets/icons/characters/${iconName}`} height='45px' />Icon</div></Form.Label>
+          <Form.Label>
+            <div style={{ height: '45px' }}>
+              <img src={`/assets/icons/characters/${iconName}`} height="45px" />
+              Icon
+            </div>
+          </Form.Label>
           <Form.Control
             type="text"
             placeholder="hero_artificer.png"
@@ -133,7 +157,9 @@ const CreateHeroTemplate = ({ toggle }: any) => {
               placeholder="Health Points"
               name="healthPoints"
               value={healthPoints}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'healthPoints')}
             />
           </Form.Group>
@@ -145,18 +171,20 @@ const CreateHeroTemplate = ({ toggle }: any) => {
               placeholder="Mana Points"
               name="manaPoints"
               value={manaPoints}
-              onChange={(evt: ChangeEvent<HTMLInputElement>) => handleChange(evt)}
+              onChange={(evt: ChangeEvent<HTMLInputElement>) =>
+                handleChange(evt)
+              }
               isInvalid={checkIsInvalid(errors, 'manaPoints')}
             />
             <Form.Control.Feedback type="invalid">
               Please provide a valid input.
-          </Form.Control.Feedback>
+            </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
         <input
           type="submit"
           className="btn btn-success"
-          value="Create template"
+          value={updateMode ? 'Update template' : 'Create template'}
         />
         <input
           type="button"
@@ -171,29 +199,21 @@ const CreateHeroTemplate = ({ toggle }: any) => {
           onClick={toggle}
         />
       </Form>
-      </div>
-      <div className="container-fluid"  style={{ marginTop: 40, width: 500, float:'right' }}>
-      <p className="lead">
-          <h2><i className="fas fa-user-edit" /> Existing Hero Templates</h2>
-      </p>
-      {
-        currentHeroTemplates.map((hero: Hero) => (
-          <div>
-            <div><img src={`/assets/icons/characters/${hero.iconName}`} height='45px' /> {hero.name}
-              <Button
-                type="button"
-                className="btn btn-danger"
-                onClick={() => dispatch(deleteHeroTemplate({ id: hero._id }))}
-              >
-                <i className="fas fa-trash-alt"></i>
-              </Button>
-            </div>
-          </div>
-        ))
-      }
-      </div>
-    </div >
+      <h1>Heros already created</h1>
+      {currentHeroTemplates
+        .sort((a: Hero, b: Hero) => a.name.localeCompare(b.name))
+        .map((template: Hero) => (
+          <ItemList
+            name={template.name}
+            img={`/assets/icons/${template.iconName}`}
+            id={template._id}
+            deleteHandler={() =>
+              dispatch(deleteHeroTemplate({ id: template._id }))
+            }
+            updateHandler={() => handleUpdate(template._id)}
+          />
+        ))}
+    </div>
   )
 }
-
 export default CreateHeroTemplate
