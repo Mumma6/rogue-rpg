@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import User from '../models/userModel'
 import { Request, Response } from 'express'
-var jwt = require('jsonwebtoken')
-var config = require('../config')
+import jwt from 'jsonwebtoken'
+const config = require('../config')
 
 const hashPassword = async (password: string) => {
   const salt = await bcrypt.genSalt(10)
@@ -20,8 +20,7 @@ const loginUser = async (req: Request, res: Response) => {
   const user = await User.findOne({ email })
 
   if (user && (await comparePassword(password, user.password))) {
-    var jwt = require('jsonwebtoken')
-    var token = jwt.sign({ id: user._id }, config.jwtSecret, {
+    const token = jwt.sign({ id: user._id }, config.jwtSecret, {
       expiresIn: 86400, // expires in 24 hours
     })
     res.json({
@@ -95,11 +94,13 @@ const verifyUserJWT = async (req: Request, res: Response) => {
   jwt.verify(
     token,
     config.jwtSecret,
-    async (err: Error, decoded: { id: string; iat: number; exp: number }) => {
-      if (err)
+    async (err: jwt.VerifyErrors | null, decoded: any) => {
+      if (err) {
         return res
           .status(500)
           .send({ auth: false, message: 'Failed to authenticate token.' })
+      }
+
       const userId = decoded.id
       const user = await User.findById(userId)
       if (user) {

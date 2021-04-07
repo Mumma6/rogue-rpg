@@ -4,12 +4,13 @@ import {
   deleteItemType,
   getAllItemTypes,
 } from '../../controllers/itemControllers/itemTypeController'
+import { protect } from '../../middlewares/authMiddleware'
 
 const itemTypes = express.Router()
 
 itemTypes
-  .post('/', getAllItemTypes)
-  .post('/create', createItemType)
-  .post('/delete', deleteItemType)
+  .post('/', protect, getAllItemTypes)
+  .post('/create', protect, createItemType)
+  .post('/delete', protect, deleteItemType)
 
 export default itemTypes

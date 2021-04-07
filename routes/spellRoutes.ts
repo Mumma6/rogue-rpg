@@ -6,12 +6,14 @@ import {
   updateSpell,
 } from '../controllers/spellController'
 
+import { protect } from '../middlewares/authMiddleware'
+
 const spells = express.Router()
 
 spells
-  .post('/', getAllSpells)
-  .post('/create', createSpell)
-  .post('/delete', deleteSpell)
-  .post('/update', updateSpell)
+  .post('/', protect, getAllSpells)
+  .post('/create', protect, createSpell)
+  .post('/delete', protect, deleteSpell)
+  .post('/update', protect, updateSpell)
 
 export default spells
