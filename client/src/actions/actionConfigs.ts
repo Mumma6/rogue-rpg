@@ -5,6 +5,7 @@ const HERO_TEMPLATE_API_ENDPOINT = 'http://localhost:5000/api/hero/template'
 const SPELL_API_ENDPOINT = 'http://localhost:5000/api/spell'
 const ITEM_TYPE_API_ENDPOINT = 'http://localhost:5000/api/items/type'
 const USERS_API_ENDPOINT = 'http://localhost:5000/api/users'
+const ENEMIES_API_ENDPOINT = 'http://localhost:5000/api/enemies'
 
 export const createHeroConfig: DispatchConfig = {
   API: `${HERO_TEMPLATE_API_ENDPOINT}/create`,
@@ -74,4 +75,24 @@ export const loginUserConfig: DispatchConfig = {
 export const verifyJWTConfig: DispatchConfig = {
   API: `${USERS_API_ENDPOINT}/verifyjwt`,
   type: types.VERIFY_JWT,
+}
+
+export const createEnemieConfig: DispatchConfig = {
+  API: `${ENEMIES_API_ENDPOINT}/create`,
+  type: types.CREATE_ENEMIE,
+}
+
+export const updateEnemieConfig: DispatchConfig = {
+  API: `${ENEMIES_API_ENDPOINT}/update`,
+  type: types.UPDATE_ENEMIE,
+}
+
+export const deleteEnemieConfig: DispatchConfig = {
+  API: `${ENEMIES_API_ENDPOINT}/delete`,
+  type: types.DELETE_ENEMIE,
+}
+
+export const getAllEnemiesConfig: DispatchConfig = {
+  API: `${ENEMIES_API_ENDPOINT}/`,
+  type: types.GET_ALL_ENEMIES,
 }

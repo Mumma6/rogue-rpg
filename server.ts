@@ -5,6 +5,7 @@ import users from './routes/userRoutes'
 import heroTemplates from './routes/heroTemplateRoutes'
 import spells from './routes/spellRoutes'
 import itemTypes from './routes/itemRoutes/itemTypeRoutes'
+import enemies from './routes/enemiesRoutes'
 
 connectDB()
 
@@ -13,12 +14,11 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-
-
 app.use('/api/users', users)
 app.use('/api/spell', spells)
 app.use('/api/items/type', itemTypes)
 app.use('/api/hero/template', heroTemplates)
+app.use('/api/enemies', enemies)
 
 const PORT = 5000
 

@@ -3,6 +3,7 @@ import { State } from '../../../reducers/rootReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form } from 'react-bootstrap'
 import { checkIsInvalid } from '../../../utils'
+import { ISpells } from '../../../reducers/adminReducer'
 import {
   createSpell,
   getAllSpells,
@@ -20,7 +21,7 @@ const CreateSpell = ({ toggle }: any) => {
     dispatch(getAllSpells())
   }, [dispatch])
 
-  const initialState = {
+  const initialState: ISpells = {
     name: '',
     magicSchool: 'Fire',
     manaCost: '',
@@ -37,9 +38,7 @@ const CreateSpell = ({ toggle }: any) => {
     applyBuffDuration: '',
   }
 
-  type ObjectAlias = typeof initialState
-
-  interface Spell extends ObjectAlias {
+  interface Spell extends ISpells {
     _id: string
   }
 

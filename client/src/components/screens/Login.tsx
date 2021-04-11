@@ -24,6 +24,8 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (token) {
+      // här måste vi kunna koppla en token till en user för att kunna logga in just den usern ifall det finns en token
+      // så spara token på user objectet
       dispatch(verifyJWT({ jwt: token }))
     }
   }, [dispatch, token])

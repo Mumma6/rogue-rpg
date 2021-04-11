@@ -1,8 +1,34 @@
 import types from './types'
-const initialState = {
+
+export interface ISpells {
+  name: string
+  magicSchool: string
+  manaCost: string | number
+  cooldown: string | number
+  tooltip: string
+  iconName: string
+  targetType: string
+  damageTarget: string | number
+  damageSelf: string | number
+  healingTarget: string | number
+  healingSelf: string | number
+  applyBuffTarget: string | number
+  applyBuffSelf: string | number
+  applyBuffDuration: string | number
+}
+
+interface IInitialState {
+  heroTemplates: any[] // TODO
+  spells: ISpells[]
+  itemTypes: any[] // TODO
+  enemies: any[] // TODO
+}
+
+const initialState: IInitialState = {
   heroTemplates: [],
   spells: [],
   itemTypes: [],
+  enemies: [],
 }
 
 const filterIdFromArray = (arr: any[], id: string) =>
@@ -67,6 +93,26 @@ const adminReducer = (state = initialState, { payload, type }: any) => {
       return {
         ...state,
         itemTypes: filterIdFromArray(state.itemTypes, payload.id),
+      }
+    case types.CREATE_ENEMIE:
+      return {
+        ...state,
+        enemies: [...state.enemies, payload],
+      }
+    case types.UPDATE_ENEMIE:
+      return {
+        ...state,
+        enemies: [...filterIdFromArray(state.enemies, payload._id), payload],
+      }
+    case types.GET_ALL_ENEMIES:
+      return {
+        ...state,
+        enemies: payload,
+      }
+    case types.DELETE_ENEMIE:
+      return {
+        ...state,
+        enemies: filterIdFromArray(state.enemies, payload.id),
       }
     default:
       return state

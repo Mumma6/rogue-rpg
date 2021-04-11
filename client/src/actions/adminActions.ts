@@ -11,6 +11,10 @@ import {
   getAllHerosConfig,
   getAllItemTypesConfig,
   getAllSpellsConfig,
+  createEnemieConfig,
+  deleteEnemieConfig,
+  updateEnemieConfig,
+  getAllEnemiesConfig,
 } from './actionConfigs'
 
 export const createHeroTemplate = (data: object) =>
@@ -42,3 +46,14 @@ export const deleteItemType = (data: object) =>
   dispatchCurried(deleteItemTypeConfig, data)
 
 export const getAllItemTypes = () => dispatchCurried(getAllItemTypesConfig)
+
+export const createEnemie = (data: object) =>
+  dispatchCurried(createEnemieConfig, data)
+
+export const getAllEnemies = () => dispatchCurried(getAllEnemiesConfig)
+
+export const updateEnemie = (data: object) =>
+  dispatchCurried(updateEnemieConfig, data)
+
+export const deleteEnemie = (data: object) =>
+  dispatchCurried(deleteEnemieConfig, data)
