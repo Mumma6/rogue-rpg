@@ -1,5 +1,12 @@
 import types from './types'
 
+// TODO, 
+
+/*
+* dela upp i flera reducers
+* skapa interface för allt
+*/
+
 export interface ISpells {
   name: string
   magicSchool: string
@@ -22,6 +29,9 @@ interface IInitialState {
   spells: ISpells[]
   itemTypes: any[] // TODO
   enemies: any[] // TODO
+  itemPrefixs: any[]
+  itemSuffix: any[]
+  itemRarity: any[]
 }
 
 const initialState: IInitialState = {
@@ -29,6 +39,9 @@ const initialState: IInitialState = {
   spells: [],
   itemTypes: [],
   enemies: [],
+  itemPrefixs: [],
+  itemSuffix: [],
+  itemRarity: [],
 }
 
 const filterIdFromArray = (arr: any[], id: string) =>
@@ -79,6 +92,9 @@ const adminReducer = (state = initialState, { payload, type }: any) => {
         ...state,
         spells: filterIdFromArray(state.spells, payload.id),
       }
+
+    // Items
+    // Type
     case types.CREATE_ITEM_TYPE:
       return {
         ...state,
@@ -94,6 +110,59 @@ const adminReducer = (state = initialState, { payload, type }: any) => {
         ...state,
         itemTypes: filterIdFromArray(state.itemTypes, payload.id),
       }
+
+    // Prefix
+    case types.CREATE_ITEM_PREFIX:
+      return {
+        ...state,
+        itemPrefixs: [...state.itemPrefixs, payload],
+      }
+    case types.GET_ALL_ITEM_PREFIXS:
+      return {
+        ...state,
+        itemPrefixs: payload,
+      }
+    case types.DELETE_ITEM_PREFIX:
+      return {
+        ...state,
+        itemPrefixs: filterIdFromArray(state.itemPrefixs, payload.id),
+      }
+
+    // Suffix
+    case types.CREATE_ITEM_SUFFIX:
+      return {
+        ...state,
+        itemSuffix: [...state.itemSuffix, payload],
+      }
+    case types.GET_ALL_ITEM_SUFFIXS:
+      return {
+        ...state,
+        itemSuffix: payload,
+      }
+    case types.DELETE_ITEM_SUFFIX:
+      return {
+        ...state,
+        itemSuffix: filterIdFromArray(state.itemPrefixs, payload.id),
+      }
+
+    // Rarity
+    case types.CREATE_ITEM_RARITY:
+      return {
+        ...state,
+        itemRarity: [...state.itemRarity, payload],
+      }
+    case types.GET_ALL_ITEM_RARITYS:
+      return {
+        ...state,
+        itemRarity: payload,
+      }
+    case types.DELETE_ITEM_RARITY:
+      return {
+        ...state,
+        itemRarity: filterIdFromArray(state.itemPrefixs, payload.id),
+      }
+
+    // Enemis
     case types.CREATE_ENEMIE:
       return {
         ...state,

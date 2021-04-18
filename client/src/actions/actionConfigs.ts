@@ -6,6 +6,9 @@ const SPELL_API_ENDPOINT = 'http://localhost:5000/api/spell'
 const ITEM_TYPE_API_ENDPOINT = 'http://localhost:5000/api/items/type'
 const USERS_API_ENDPOINT = 'http://localhost:5000/api/users'
 const ENEMIES_API_ENDPOINT = 'http://localhost:5000/api/enemies'
+const ITEM_PREFIX_API_ENDPOINT = 'http://localhost:5000/api/items/prefix'
+const ITEM_SUFFIX_API_ENDPOINT = 'http://localhost:5000/api/items/suffix'
+const ITEM_RARITY_API_ENDPOINT = 'http://localhost:5000/api/items/rarity'
 
 export const createHeroConfig: DispatchConfig = {
   API: `${HERO_TEMPLATE_API_ENDPOINT}/create`,
@@ -95,4 +98,49 @@ export const deleteEnemieConfig: DispatchConfig = {
 export const getAllEnemiesConfig: DispatchConfig = {
   API: `${ENEMIES_API_ENDPOINT}/`,
   type: types.GET_ALL_ENEMIES,
+}
+
+export const createItemPrefixConfig: DispatchConfig = {
+  API: `${ITEM_PREFIX_API_ENDPOINT}/create`,
+  type: types.CREATE_ITEM_PREFIX,
+}
+
+export const deleteItemPrefixConfig: DispatchConfig = {
+  API: `${ITEM_PREFIX_API_ENDPOINT}/delete`,
+  type: types.DELETE_ITEM_PREFIX,
+}
+
+export const getAllItemPrefixConfig: DispatchConfig = {
+  API: `${ITEM_PREFIX_API_ENDPOINT}/`,
+  type: types.GET_ALL_ITEM_PREFIXS,
+}
+
+export const createItemSuffixConfig: DispatchConfig = {
+  API: `${ITEM_SUFFIX_API_ENDPOINT}/create`,
+  type: types.CREATE_ITEM_SUFFIX,
+}
+
+export const deleteItemSuffixConfig: DispatchConfig = {
+  API: `${ITEM_SUFFIX_API_ENDPOINT}/delete`,
+  type: types.DELETE_ITEM_SUFFIX,
+}
+
+export const getAllItemSuffixsConfig: DispatchConfig = {
+  API: `${ITEM_SUFFIX_API_ENDPOINT}/`,
+  type: types.GET_ALL_ITEM_SUFFIXS,
+}
+
+export const createItemRarityConfig: DispatchConfig = {
+  API: `${ITEM_RARITY_API_ENDPOINT}/create`,
+  type: types.CREATE_ITEM_RARITY,
+}
+
+export const deleteItemRarityConfig: DispatchConfig = {
+  API: `${ITEM_RARITY_API_ENDPOINT}/delete`,
+  type: types.DELETE_ITEM_RARITY,
+}
+
+export const getAllItemRarityConfig: DispatchConfig = {
+  API: `${ITEM_RARITY_API_ENDPOINT}/`,
+  type: types.GET_ALL_ITEM_RARITYS,
 }

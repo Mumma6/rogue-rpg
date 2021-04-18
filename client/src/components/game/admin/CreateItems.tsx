@@ -1,11 +1,15 @@
 import ItemType from './items/ItemType'
-import Prefix from './items/Prefix'
+import ItemPrefix from './items/ItemPrefix'
+import ItemSuffix from './items/ItemSuffix'
+import ItemRarity from './items/ItemRarity'
 import { useRender } from '../../../customHooks/useRender'
 
 const CreateItems = () => {
   const components = {
     type: () => <ItemType />,
-    prefix: () => <Prefix />,
+    prefix: () => <ItemPrefix />,
+    suffix: () => <ItemSuffix />,
+    rarity: () => <ItemRarity />,
   }
 
   const { render, currentComponent, setCurrentComponent } = useRender(

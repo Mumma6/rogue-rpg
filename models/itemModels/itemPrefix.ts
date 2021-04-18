@@ -1,24 +1,14 @@
 import mongoose from 'mongoose'
 
-export interface IItemType extends mongoose.Document {
+export interface IItemPrefix extends mongoose.Document {
   name: string
   levelRangeFrom: string
   levelRangeTo: string
   frequency: number
-  icon?: string
+  stats: string
 }
 
-// can create nested object types with
-/*  
-type: Map
-of: String 
-
-
-and arrays with 
-type: [Number]
-*/
-
-const itemTypeSchema = new mongoose.Schema({
+const itemPrefixSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -35,11 +25,11 @@ const itemTypeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  icon: {
+  stats: {
     type: String,
   },
 })
 
-const ItemType = mongoose.model<IItemType>('ItemType', itemTypeSchema)
+const ItemPrefix = mongoose.model<IItemPrefix>('ItemPrefix', itemPrefixSchema)
 
-export default ItemType
+export default ItemPrefix

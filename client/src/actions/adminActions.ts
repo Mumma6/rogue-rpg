@@ -15,6 +15,16 @@ import {
   deleteEnemieConfig,
   updateEnemieConfig,
   getAllEnemiesConfig,
+  getAllItemPrefixConfig,
+  getAllItemRarityConfig,
+  getAllItemSuffixsConfig,
+  deleteItemPrefixConfig,
+  deleteItemRarityConfig,
+  deleteItemSuffixConfig,
+  createAccountConfig,
+  createItemPrefixConfig,
+  createItemRarityConfig,
+  createItemSuffixConfig,
 } from './actionConfigs'
 
 export const createHeroTemplate = (data: object) =>
@@ -57,3 +67,27 @@ export const updateEnemie = (data: object) =>
 
 export const deleteEnemie = (data: object) =>
   dispatchCurried(deleteEnemieConfig, data)
+
+export const createItemPrefix = (data: object) =>
+  dispatchCurried(createItemPrefixConfig, data)
+
+export const deleteItemPrefix = (data: object) =>
+  dispatchCurried(deleteItemPrefixConfig, data)
+
+export const getAllItemPrefixs = () => dispatchCurried(getAllItemPrefixConfig)
+
+export const createItemSuffix = (data: object) =>
+  dispatchCurried(createItemSuffixConfig, data)
+
+export const deleteItemSuffix = (data: object) =>
+  dispatchCurried(deleteItemSuffixConfig, data)
+
+export const getAllItemSuffixs = () => dispatchCurried(getAllItemSuffixsConfig)
+
+export const createItemRarity = (data: object) =>
+  dispatchCurried(createItemRarityConfig, data)
+
+export const deleteItemRarity = (data: object) =>
+  dispatchCurried(deleteItemRarityConfig, data)
+
+export const getAllItemRaritys = () => dispatchCurried(getAllItemRarityConfig)
