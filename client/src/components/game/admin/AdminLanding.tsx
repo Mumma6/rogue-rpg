@@ -3,6 +3,7 @@ import CreateSpell from './CreateSpell'
 import CreateZone from './CreateZone'
 import CreateItems from './CreateItems'
 import CreateEnemie from './CreateEnemie'
+import Users from './Users'
 import { useDispatch } from 'react-redux'
 import { useRender } from '../../../customHooks/useRender'
 import types from '../../../reducers/types'
@@ -13,16 +14,18 @@ const AdminLanding = () => {
   // Ladda allt från redux storen här?
   // Nu laddas t ex spells endast när man går in på spells, men sen ligger dom i storen även fast man byter till t ex herotemplat, kanske lika bra att allt laddas in direkt?
 
+  const defaultToggle = () => setCurrentComponent('default')
   const components = {
     hero: () => (
-      <CreateHeroTemplate toggle={() => setCurrentComponent('default')} />
+      <CreateHeroTemplate toggle={() => defaultToggle()} />
     ),
-    spell: () => <CreateSpell toggle={() => setCurrentComponent('default')} />,
-    zone: () => <CreateZone toggle={() => setCurrentComponent('default')} />,
+    spell: () => <CreateSpell toggle={() => defaultToggle()} />,
+    zone: () => <CreateZone toggle={() => defaultToggle()} />,
     items: () => <CreateItems />,
     enemie: () => (
-      <CreateEnemie toggle={() => setCurrentComponent('default')} />
+      <CreateEnemie toggle={() => defaultToggle()} />
     ),
+    users: () => <Users toggle={() => defaultToggle()} />
   }
 
   const { render, currentComponent, setCurrentComponent } = useRender(
@@ -43,6 +46,19 @@ const AdminLanding = () => {
       >
         <i className="fas fa-arrow-left"></i>
       </button>
+      <div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setCurrentComponent('users')}
+          style={{ marginTop: 20 }}
+        >
+          Edit users
+        </button>
+      </div>
+
+
+      <h2 style={{ marginTop: 20 }}>Templates</h2>
       <div className="btn-group" role="group">
         <button
           type="button"

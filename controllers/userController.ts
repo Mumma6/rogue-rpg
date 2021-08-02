@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import User from '../models/userModel'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import users from '../routes/userRoutes'
 const config = require('../config')
 
 const hashPassword = async (password: string) => {
@@ -117,4 +118,49 @@ const verifyUserJWT = async (req: Request, res: Response) => {
   )
 }
 
-export { loginUser, registerUser, deleteUser, verifyUserJWT }
+// @desc    Fetch all users
+// @route   POST /api/users/
+const getAllUsers = async (req: Request, res: Response) => {
+  const users = await User.find({})
+
+  if (users) {
+    res.json(users)
+  } else {
+    res.status(404)
+    throw new Error('Users not found')
+  }
+}
+
+// @desc    Update user
+// @route   POST /api/users/update
+const updateUser = async (req: Request, res: Response) => {
+  const user = await User.findById(req.body._id)
+
+  if (user) {
+    user.overwrite({ ...req.body })
+    const updateUser = await user.save()
+    res.json(updateUser)
+  } else {
+    res.status(404)
+    throw new Error('Users not found')
+  }
+}
+
+// i frontend
+
+// lista alla users
+
+
+/*
+
+Users behöver inte vara i redux storen, skapa en useAxios hook istället.
+
+tryck på dom för att editera, ska kunna ta bort och ändra roll. Vissa alla
+karaktärer som är kopplade till varje user
+visa email, role, created osv. 
+
+
+
+*/
+
+export { loginUser, registerUser, deleteUser, verifyUserJWT, getAllUsers, updateUser }
