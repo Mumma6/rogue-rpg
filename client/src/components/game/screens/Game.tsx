@@ -30,6 +30,17 @@ const Game = () => {
         className="btn btn-info"
         onClick={() =>
           dispatch({
+            type: types.FORUM_AREA,
+          })
+        }
+      >
+        Go to forum
+      </button>
+      <button
+        type="button"
+        className="btn btn-danger"
+        onClick={() =>
+          dispatch({
             type: types.LOG_OUT,
           })
         }

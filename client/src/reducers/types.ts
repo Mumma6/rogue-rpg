@@ -8,6 +8,7 @@ const types = {
   ADMIN_AREA: 'ADMIN_AREA',
   INGAME_PAGE: 'INGAME_PAGE',
   LOG_OUT: 'LOG_OUT',
+  FORUM_AREA: 'FORUM_AREA',
 
   // Admin types
 
