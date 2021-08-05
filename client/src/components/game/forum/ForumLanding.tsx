@@ -12,6 +12,7 @@ export interface IPost {
   title: string,
   content: string
   author: string,
+  created: string,
   comments?: any[],
 }
 
@@ -22,6 +23,7 @@ export const GET_POSTS = gql`
       title
       content
       author
+      created
       comments {
         content
         author
@@ -34,8 +36,6 @@ export const GET_POSTS = gql`
 const ForumLanding = () => {
   const dispatch = useDispatch()
   const { loading, error, data } = useQuery(GET_POSTS)
-
-  console.log(data?.posts)
 
   const defaultToggle = () => setCurrentComponent('default')
   const components = {

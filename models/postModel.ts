@@ -5,6 +5,7 @@ export interface IPost extends mongoose.Document {
   content: string,
   author: string,
   comments: any[],
+  created: string,
 }
 
 const postModel = new mongoose.Schema({
@@ -19,6 +20,9 @@ const postModel = new mongoose.Schema({
   },
   comments: {
     type: Array,
+  },
+  created: {
+    type: String,
   }
 })
 

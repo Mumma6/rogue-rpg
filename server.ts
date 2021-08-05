@@ -31,6 +31,7 @@ const typeDefs = gql`
     content: String,
     author: String,
     comments: [Comment],
+    created: String,
   },
   type Query {
     posts: [Post]
@@ -69,6 +70,7 @@ const resolvers = {
         title: data.title,
         content: data.content,
         author: data.author,
+        created: new Date(),
       });
       return newPost.save();
     },
@@ -79,6 +81,7 @@ const resolvers = {
           title: post.title,
           content: post.content,
           author: post.author,
+          created: post.created,
           comments: [
             ...(post.comments || []),
             {
@@ -104,6 +107,7 @@ const resolvers = {
           title: post.title,
           content: post.content,
           author: post.author,
+          created: post.created,
 
           // comment.id is saved as a ObjectId
           comments: post.comments.filter((comment) => comment.id.toString() !== commentId)
