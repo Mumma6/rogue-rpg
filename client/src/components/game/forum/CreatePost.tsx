@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux'
 import { State } from '../../../reducers/rootReducer'
 import { gql, useMutation } from '@apollo/client';
 import { GET_POSTS } from './ForumLanding'
+import { AddPost } from './__generated__/AddPost'
 
 const ADD_POST = gql`
-  mutation($title: String!, $content: String!, $author: String!) {
+  mutation AddPost($title: String!, $content: String!, $author: String!) {
     addPost(title: $title, content: $content, author: $author) {
       title
       content
@@ -16,27 +17,29 @@ const ADD_POST = gql`
 `;
 
 const CreatePost = ({ toggle }: any) => {
-  const [addPost, { data, loading, error }] = useMutation(ADD_POST)
+  const [addPost, { data, loading, error }] = useMutation<AddPost>(ADD_POST)
   const [title, setTitle] = useState<string>('')
   const [content, setContent] = useState<string>('')
   const user = useSelector((state: State) => state.app.user)
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault()
-  
-    addPost({
-      variables: {
-        title,
-        content,
-        author: user?.email,
-      },
-      refetchQueries: [{
-        query: GET_POSTS,
-      }]
-    })
 
-    setTitle('')
-    setContent('')
+    if (title !== '' && content !== '') {
+      addPost({
+        variables: {
+          title,
+          content,
+          author: user?.email,
+        },
+        refetchQueries: [{
+          query: GET_POSTS,
+        }]
+      })
+
+      setTitle('')
+      setContent('')
+    }
   }
 
   if (error) {
@@ -65,7 +68,7 @@ const CreatePost = ({ toggle }: any) => {
         <Form.Group>
           <Form.Label>Content</Form.Label>
           <Form.Control
-            as="textarea" rows={3} 
+            as="textarea" rows={3}
             type="text"
             placeholder="Content..."
             name="content"

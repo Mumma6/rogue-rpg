@@ -17,7 +17,7 @@ export interface IPost {
 }
 
 export const GET_POSTS = gql`
-  {
+  query GetPosts {
     posts {
       _id
       title

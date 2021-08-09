@@ -13,7 +13,7 @@ import Form from 'react-bootstrap/Form'
 import PaginationComp from './PaginationComp'
 
 const REMOVE_POST = gql`
-mutation($id: ID!) {
+mutation RemovePost($id: ID!) {
   removePost(id: $id) {
     title
     _id
@@ -22,7 +22,7 @@ mutation($id: ID!) {
 `
 
 const ADD_COMMENT = gql`
-  mutation($id: ID!, $content: String!, $author: String!) {
+  mutation AddComment($id: ID!, $content: String!, $author: String!) {
     addComment(id: $id, content: $content, author: $author) {
       content
       author
@@ -31,7 +31,7 @@ const ADD_COMMENT = gql`
 `
 
 const REMOVE_COMMENT = gql`
-mutation($postId: ID!, $commentId: ID!) {
+mutation RemoveComment($postId: ID!, $commentId: ID!) {
   removeComment(postId: $postId, commentId: $commentId,) {
     content
   }

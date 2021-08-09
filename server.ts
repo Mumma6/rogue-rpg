@@ -1,3 +1,4 @@
+require('dotenv').config();
 import express from 'express'
 import { ApolloServer, gql } from 'apollo-server-express'
 import connectDB from './db'
@@ -94,13 +95,13 @@ const resolvers = {
         await post.save()
       }
     },
-    removePost: async (parent: any, { id }: { id: string }) => {
+    removePost: async (_: any, { id }: { id: string }) => {
       const post = PostModel.findById(id)
       if (post) {
         await post.remove()
       }
     },
-    removeComment: async (parent: any, { postId, commentId }: { postId: string, commentId: string }) => {
+    removeComment: async (_: any, { postId, commentId }: { postId: string, commentId: string }) => {
       const post = await PostModel.findById(postId)
       if (post) {
         post.overwrite({
@@ -122,6 +123,8 @@ const resolvers = {
 
 const startApolloServer = async () => {
   const graphqlServer = new ApolloServer({
+    // Lägg till auth här. Contex funktionen körs innan varje graphql request.
+    // context: async () =>
     typeDefs,
     resolvers,
   })
