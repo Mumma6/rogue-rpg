@@ -49,6 +49,11 @@ const appReducer = (state = initialState, action: IActions) => {
         ...state,
         appState: 'admin-area',
       }
+    case types.FORUM_AREA:
+      return {
+        ...state,
+        appState: 'forum-area',
+      }
     case types.INGAME_PAGE:
       return {
         ...state,

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { State } from './reducers/rootReducer'
 import CreateAccount from './components/screens/CreateAccount'
 import AdminLanding from './components/game/admin/AdminLanding'
+import ForumLanding from './components/game/forum/ForumLanding'
 import Game from './components/game/screens/Game'
 import Login from './components/screens/Login'
 import Navbar from './components/layout/Navbar'
@@ -23,6 +24,7 @@ const Main = () => {
     'create-account': () => addNavbar(CreateAccount),
     'in-game': () => <Game />,
     'admin-area': () => <AdminLanding />,
+    'forum-area': () => <ForumLanding />,
   }
 
   const { render, currentComponent, setCurrentComponent } = useRender(
