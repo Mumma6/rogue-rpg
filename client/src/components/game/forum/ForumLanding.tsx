@@ -46,6 +46,7 @@ const ForumLanding = () => {
 
   const { render, currentComponent, setCurrentComponent } = useRender(
     components,
+    'postList',
   )
   return (
     <div className="container">

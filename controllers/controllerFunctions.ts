@@ -9,8 +9,7 @@ const createFunction = (model: Model) => async (
 ) => {
   const { name } = req.body
   try {
-    const exist = await model.findOne({ name })
-
+    const exist = await model.findOne({ name: name || '' })
     if (exist) {
       res.status(400)
       throw new Error('Already exist')

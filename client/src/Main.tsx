@@ -4,6 +4,8 @@ import { State } from './reducers/rootReducer'
 import CreateAccount from './components/screens/CreateAccount'
 import AdminLanding from './components/game/admin/AdminLanding'
 import ForumLanding from './components/game/forum/ForumLanding'
+import StartRun from './components/game/screens/Startrun'
+import RunLanding from './components/game/screens/Run/RunLanding'
 import Game from './components/game/screens/Game'
 import Login from './components/screens/Login'
 import Navbar from './components/layout/Navbar'
@@ -25,6 +27,8 @@ const Main = () => {
     'in-game': () => <Game />,
     'admin-area': () => <AdminLanding />,
     'forum-area': () => <ForumLanding />,
+    'startrun-area': () => <StartRun />,
+    'inrun-area': () => <RunLanding />
   }
 
   const { render, currentComponent, setCurrentComponent } = useRender(

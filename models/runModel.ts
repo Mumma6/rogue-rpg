@@ -3,9 +3,9 @@ import { IHero } from './heroModel'
 
 interface IRun extends mongoose.Document {
   user_id: string
-  heros: IHero[]
-  layer: number
-  zone: string
+  heros: IHero
+  layer?: number
+  zone?: string
 }
 
 const runSchema = new mongoose.Schema({
@@ -13,17 +13,15 @@ const runSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  heros: {
-    type: Array,
+  hero: {
+    type: Object,
     required: true,
   },
   layer: {
     type: Number,
-    required: true,
   },
   zone: {
     type: String,
-    required: true,
   },
 })
 

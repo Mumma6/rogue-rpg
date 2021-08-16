@@ -27,7 +27,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
     attackRating: '',
     defenceRating: '',
     classType: '',
-    iconName: 'hero_artificer.png',
+    iconName: '',
     healthPoints: '',
     manaPoints: '',
   }
@@ -205,7 +205,7 @@ const CreateHeroTemplate = ({ toggle }: any) => {
         .map((template: Hero) => (
           <ItemList
             name={template.name}
-            img={`/assets/icons/${template.iconName}`}
+            img={`/assets/icons/characters/${template.iconName}.png`}
             id={template._id}
             deleteHandler={() =>
               dispatch(deleteHeroTemplate({ id: template._id }))

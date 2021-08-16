@@ -51,6 +51,7 @@ const AdminLanding = () => {
           type="button"
           className="btn btn-primary"
           onClick={() => setCurrentComponent('users')}
+          disabled={currentComponent === 'users'}
           style={{ marginTop: 20 }}
         >
           Edit users
@@ -64,6 +65,7 @@ const AdminLanding = () => {
           type="button"
           className="btn btn-primary"
           onClick={() => setCurrentComponent('hero')}
+          disabled={currentComponent === 'hero'}
         >
           Create hero templates
         </button>
@@ -72,6 +74,7 @@ const AdminLanding = () => {
           type="button"
           className="btn btn-primary"
           onClick={() => setCurrentComponent('spell')}
+          disabled={currentComponent === 'spell'}
         >
           Create spell templates
         </button>
@@ -79,6 +82,7 @@ const AdminLanding = () => {
           type="button"
           className="btn btn-primary"
           onClick={() => setCurrentComponent('zone')}
+          disabled={currentComponent === 'zone'}
         >
           Create zone templates
         </button>
@@ -86,6 +90,7 @@ const AdminLanding = () => {
           type="button"
           className="btn btn-primary"
           onClick={() => setCurrentComponent('items')}
+          disabled={currentComponent === 'items'}
         >
           Create items templates
         </button>
@@ -93,6 +98,7 @@ const AdminLanding = () => {
           type="button"
           className="btn btn-primary"
           onClick={() => setCurrentComponent('enemie')}
+          disabled={currentComponent === 'enemie'}
         >
           Create enemies templates
         </button>

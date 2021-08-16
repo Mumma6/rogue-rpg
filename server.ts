@@ -8,6 +8,7 @@ import heroTemplates from './routes/heroTemplateRoutes'
 import spells from './routes/spellRoutes'
 import itemTypes from './routes/itemRoutes/itemTypeRoutes'
 import enemies from './routes/enemiesRoutes'
+import runs from './routes/runRoutes'
 import itemPrefixs from './routes/itemRoutes/itemPrefixRoutes'
 import itemSuffixs from './routes/itemRoutes/itemSuffixRoutes'
 import itemRaritys from './routes/itemRoutes/itemRarityRoutes'
@@ -139,6 +140,7 @@ const startApolloServer = async () => {
   app.use('/api/items/type', itemTypes)
   app.use('/api/hero/template', heroTemplates)
   app.use('/api/enemies', enemies)
+  app.use('/api/run', runs)
   app.use('/api/items/prefix', itemPrefixs)
   app.use('/api/items/suffix', itemSuffixs)
   app.use('/api/items/rarity', itemRaritys)

@@ -5,6 +5,7 @@ const HERO_TEMPLATE_API_ENDPOINT = 'http://localhost:5000/api/hero/template'
 const SPELL_API_ENDPOINT = 'http://localhost:5000/api/spell'
 const ITEM_TYPE_API_ENDPOINT = 'http://localhost:5000/api/items/type'
 const USERS_API_ENDPOINT = 'http://localhost:5000/api/users'
+const RUN_API_ENDPOINT = 'http://localhost:5000/api/run'
 const ENEMIES_API_ENDPOINT = 'http://localhost:5000/api/enemies'
 const ITEM_PREFIX_API_ENDPOINT = 'http://localhost:5000/api/items/prefix'
 const ITEM_SUFFIX_API_ENDPOINT = 'http://localhost:5000/api/items/suffix'
@@ -143,4 +144,24 @@ export const deleteItemRarityConfig: DispatchConfig = {
 export const getAllItemRarityConfig: DispatchConfig = {
   API: `${ITEM_RARITY_API_ENDPOINT}/`,
   type: types.GET_ALL_ITEM_RARITYS,
+}
+
+export const createRunConfig: DispatchConfig = {
+  API: `${RUN_API_ENDPOINT}/create`,
+  type: types.CREATE_RUN,
+}
+
+export const getAllRunsConfig: DispatchConfig = {
+  API: `${RUN_API_ENDPOINT}/`,
+  type: types.GET_ALL_RUNS,
+}
+
+export const deleteRunConfig: DispatchConfig = {
+  API: `${RUN_API_ENDPOINT}/delete`,
+  type: types.DELETE_RUN,
+}
+
+export const updateRunConfig: DispatchConfig = {
+  API: `${RUN_API_ENDPOINT}/update`,
+  type: types.UPDATE_RUN,
 }

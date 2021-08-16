@@ -1,19 +1,48 @@
 import types from './types'
-const initialState = {
-  user: null,
-  appState: 'login',
-  auth: false,
+
+interface IHero {
+  _id: string,
+  name: string,
+  attackRating: string,
+  defenceRating: string,
+  classType: string,
+  healthPoints: string,
+  manaPoints: string,
+  iconName: string,
 }
+
+interface IRun {
+  hero: IHero,
+}
+
+
 
 interface IUser {
   email: string
   role: string
+  _id?: string,
 }
 
 interface IActions {
   type: string
   payload: any
 }
+
+interface IInitialState {
+  user: null | IUser,
+  appState: string,
+  auth: boolean,
+  run: IRun | null
+}
+
+const initialState: IInitialState = {
+  user: null,
+  appState: 'login',
+  auth: false,
+  run: null,
+}
+
+
 const appReducer = (state = initialState, action: IActions) => {
   switch (action.type) {
     case types.REGISTER_ACCOUNT:
@@ -59,6 +88,26 @@ const appReducer = (state = initialState, action: IActions) => {
         ...state,
         appState: 'in-game',
       }
+    case types.STARTRUN_PAGE:
+      return {
+        ...state,
+        appState: 'startrun-area',
+      }
+    case types.CREATE_RUN:
+    case types.SET_RUN:
+      return {
+        ...state,
+        appState: 'inrun-area',
+        run: action.payload,
+      }
+
+      case types.END_RUN:
+      return {
+        ...state,
+        appState: 'in-game',
+        run: null,
+      }
+
     case types.LOG_OUT:
       localStorage.removeItem('rougelike_jwt')
       return initialState

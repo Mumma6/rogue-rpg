@@ -111,7 +111,7 @@ const ItemRarity = ({ toggle }: any) => {
           onClick={toggle}
         />
       </Form>
-      <h1>Item Raritys already created</h1>
+      {currentItemRaritys.length !== 0 && <h1>Item Raritys already created</h1>}
       {currentItemRaritys.map((item: ItemRarity) => (
         <div>
           <div>{item.name}</div>

@@ -25,6 +25,11 @@ import {
   createItemPrefixConfig,
   createItemRarityConfig,
   createItemSuffixConfig,
+
+  createRunConfig,
+  deleteRunConfig,
+  getAllRunsConfig,
+  updateRunConfig
 } from './actionConfigs'
 
 export const createHeroTemplate = (data: object) =>
@@ -91,3 +96,15 @@ export const deleteItemRarity = (data: object) =>
   dispatchCurried(deleteItemRarityConfig, data)
 
 export const getAllItemRaritys = () => dispatchCurried(getAllItemRarityConfig)
+
+
+export const createRun = (data?: object) =>
+  dispatchCurried(createRunConfig, data)
+
+export const getAllRuns = () => dispatchCurried(getAllRunsConfig)
+
+export const deleteRun = (data: object) =>
+  dispatchCurried(deleteRunConfig, data)
+
+export const updateRun = (data: object) =>
+  dispatchCurried(updateRunConfig, data)
